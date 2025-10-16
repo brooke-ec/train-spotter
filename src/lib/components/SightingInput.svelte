@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from "svelte/legacy";
+
 	import { faHashtag, faFont, faTrash } from "@fortawesome/free-solid-svg-icons";
 	import { gettable, persist } from "$lib/util";
 	import { slide } from "svelte/transition";
@@ -7,7 +9,7 @@
 	import Fa from "svelte-fa";
 
 	const location = gettable(persist<string>("location", ""));
-	let inputs: Input[] = [];
+	let inputs: Input[] = $state([]);
 	type Input = {
 		id: string;
 		value: string;
@@ -16,10 +18,10 @@
 	};
 
 	// Create new inputs when there are none empty
-	$: {
+	$effect(() => {
 		if (!inputs.some((i) => i.value == ""))
 			inputs = [...inputs, { id: crypto.randomUUID(), value: "", simple: true, binds: {} }];
-	}
+	});
 
 	const focus = (i: number) => inputs[i].binds[inputs[i].simple ? "simple" : "advanced"]?.focus();
 
@@ -51,6 +53,14 @@
 
 		const time = new Date().getTime();
 
+		await db.createIndex({ index: { fields: ["type"] } });
+
+		const result = await db.find({
+			selector: { type: "schema" },
+			limit: 1,
+		});
+		const schemaId = result.docs.length > 0 ? result.docs[0]._id : "";
+
 		db.bulkDocs(
 			inputs
 				.filter((i) => i.value != "")
@@ -63,6 +73,8 @@
 					type: "sighting",
 					_id: e.id,
 					time,
+					schema: schemaId,
+					fields: {},
 				})),
 		);
 
@@ -79,7 +91,7 @@
 		Location:
 		<input type="text" autocomplete="off" placeholder="Brighton" bind:value={$location} />
 	</label>
-	<!-- svelte-ignore a11y-label-has-associated-control -->
+	<!-- svelte-ignore a11y_label_has_associated_control -->
 	<label>
 		Sightings:
 		<div class="container">
@@ -92,7 +104,7 @@
 						placeholder="700128"
 						bind:value={input.value}
 						bind:this={input.binds.simple}
-						on:keydown={(e) => keyDown(e, i)}
+						onkeydown={(e) => keyDown(e, i)}
 						tabindex={!input.simple ? -1 : undefined}
 					/>
 					<input
@@ -103,10 +115,10 @@
 						placeholder="700128"
 						bind:value={inputs[i].value}
 						bind:this={input.binds.advanced}
-						on:keydown={(e) => keyDown(e, i)}
+						onkeydown={(e) => keyDown(e, i)}
 						tabindex={input.simple ? -1 : undefined}
 					/>
-					<button class="secondary" on:click={() => toggle(i)}>
+					<button class="secondary" onclick={() => toggle(i)}>
 						<Fa icon={input.simple ? faHashtag : faFont} />
 					</button>
 				</span>
@@ -114,8 +126,8 @@
 		</div>
 	</label>
 	<span>
-		<button class="primary" on:click={submit}>Submit</button>
-		<button class="primary" on:click={clear}><Fa icon={faTrash} /></button>
+		<button class="primary" onclick={submit}>Submit</button>
+		<button class="primary" onclick={clear}><Fa icon={faTrash} /></button>
 	</span>
 </div>
 

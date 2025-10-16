@@ -1,8 +1,8 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import { faCog, faHome, faListCheck } from "@fortawesome/free-solid-svg-icons";
 	import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 	import { persist } from "$lib/util";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import Fa from "svelte-fa";
 
 	export const padding = persist("navbar-padding", 0);
@@ -15,13 +15,13 @@
 </script>
 
 <script lang="ts">
-	let margin = 0;
+	let margin = $state(0);
 </script>
 
 <div style="height: {margin}px;"></div>
 <nav style="padding-bottom: {$padding}px;" bind:clientHeight={margin}>
 	{#each entries as { href, icon, label }}
-		<a {href} class:active={$page.data.path[0] == href.split("/")[1]}>
+		<a {href} class:active={page.data.path[0] == href.split("/")[1]}>
 			<Fa {icon} /><span>{label}</span>
 		</a>
 	{/each}

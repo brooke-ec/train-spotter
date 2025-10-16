@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import { status } from "$lib/pouchdb";
 	import {
 		faCloud,
@@ -27,10 +27,14 @@
 	import Fa from "svelte-fa";
 	import { derived } from "svelte/store";
 
-	export let mode: "sync" | "connection";
-	export let icon: boolean = true;
+	interface Props {
+		mode: "sync" | "connection";
+		icon?: boolean;
+	}
 
-	$: s = mode == "sync" ? $sync : $connection;
+	let { mode, icon = true }: Props = $props();
+
+	let s = $derived(mode == "sync" ? $sync : $connection);
 </script>
 
 <span>

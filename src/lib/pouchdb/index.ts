@@ -1,7 +1,7 @@
 import { derived, writable, type Readable, type Writable } from "svelte/store";
 import { gettable, persist, sleep } from "$lib/util";
-import { onMount, onDestroy } from "svelte";
 import type { AnyDoc } from "./types";
+import { onMount } from "svelte";
 import "./pouchdb";
 import "./pouchdb.find";
 

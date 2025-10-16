@@ -1,5 +1,7 @@
 /// <reference types="pouchdb-core" />
 
+import type { SchemaFieldType, SchemaDefaultValue } from "$lib/types";
+
 export type SightingDoc = PouchDB.Core.ExistingDocument<{
 	identification: string;
 	type: "sighting";
@@ -8,13 +10,19 @@ export type SightingDoc = PouchDB.Core.ExistingDocument<{
 		geolocation: GeolocationCoordinates | null;
 		custom: string;
 	};
+	schema: string;
+	fields: Record<string, string>;
 }>;
 
 export type SchemaDoc = PouchDB.Core.ExistingDocument<{
 	type: "schema";
 	icon: string;
 	name: string;
-	fields: string[];
+	fields: {
+		name: string;
+		type: SchemaFieldType;
+		defaultValue: SchemaDefaultValue;
+	}[];
 }>;
 
-export type AnyDoc = Omit<SightingDoc | SchemaDoc, "_rev">;
+export type AnyDoc = Omit<SightingDoc | SchemaDoc, "_rev", "_id">;

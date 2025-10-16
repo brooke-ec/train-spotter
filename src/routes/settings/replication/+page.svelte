@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import ReplicationStatus from "$lib/components/ReplicationStatus.svelte";
 	import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 	import { connect, credentials, disconnect as close, status } from "$lib/pouchdb";
@@ -6,9 +8,9 @@
 	import Fa from "svelte-fa";
 
 	const { error } = status;
-	let address = $credentials?.address ?? "";
-	let username = $credentials?.username ?? "";
-	let password = "";
+	let address = $state($credentials?.address ?? "");
+	let username = $state($credentials?.username ?? "");
+	let password = $state("");
 
 	function submit() {
 		credentials.set({ address, username, password });
@@ -29,7 +31,7 @@
 	<ReplicationStatus mode="connection" />
 	<ReplicationStatus mode="sync" />
 	<hr />
-	<form class="flexcol" on:submit|preventDefault={submit}>
+	<form class="flexcol" onsubmit={preventDefault(submit)}>
 		<label>
 			CouchDB Database Address:
 			<input required type="url" placeholder="https://example.com/spotter" bind:value={address} />
@@ -46,7 +48,7 @@
 		</label>
 		<div class="controls">
 			<button type="submit" class="primary">Connect</button>
-			<button type="button" class="secondary" on:click={disconnect}>Disconnect</button>
+			<button type="button" class="secondary" onclick={disconnect}>Disconnect</button>
 		</div>
 	</form>
 	{#if $error}

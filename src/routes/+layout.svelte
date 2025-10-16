@@ -10,7 +10,12 @@
 	import Backbar from "./Backbar.svelte";
 	import Navbar from "./Navbar.svelte";
 
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+		children?: import('svelte').Snippet;
+	}
+
+	let { data, children }: Props = $props();
 </script>
 
 <Loading />
@@ -22,7 +27,7 @@
 <div style="overflow-x: hidden">
 	{#key data.path}
 		<main in:fly={{ x: -200, duration: 200, delay: 200 }} out:fly={{ x: 200, duration: 200 }}>
-			<slot />
+			{@render children?.()}
 		</main>
 	{/key}
 </div>

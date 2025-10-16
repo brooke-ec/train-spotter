@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	export const grouping = persist("list-grouping", 20);
 </script>
 
@@ -6,11 +6,14 @@
 	import type { SightingDoc } from "../pouchdb/types";
 	import { db, onChange } from "$lib/pouchdb";
 	import { persist } from "$lib/util";
-	import { last } from "@melt-ui/svelte/internal/helpers";
 
-	export let limit: number | null = null;
+	interface Props {
+		limit?: number | null;
+	}
 
-	let elements: [undefined | string, SightingDoc][] = [];
+	let { limit = null }: Props = $props();
+
+	let elements: [undefined | string, SightingDoc][] = $state([]);
 
 	onChange(async () => {
 		await db.createIndex({ index: { fields: ["time", "type"] } });

@@ -11,7 +11,7 @@
 	import { onMount } from "svelte";
 	import Fa from "svelte-fa";
 
-	let storageUsage: number;
+	let storageUsage: number = $state(100);
 	onMount(async () => {
 		const { quota, usage } = await navigator.storage.estimate();
 		if (quota && usage) storageUsage = Math.ceil((usage / quota) * 100);

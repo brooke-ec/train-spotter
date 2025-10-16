@@ -3,7 +3,11 @@
 	import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 	import Fa from "svelte-fa";
 
-	export let items: { url: string; icon: IconDefinition; title: string; info?: string }[];
+	interface Props {
+		items: { url: string; icon: IconDefinition; title: string; info?: string }[];
+	}
+
+	let { items }: Props = $props();
 </script>
 
 <div class="group">

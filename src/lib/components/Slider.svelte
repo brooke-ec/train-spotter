@@ -1,13 +1,24 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { createSlider, melt, createSync, type CreateSliderProps } from "@melt-ui/svelte";
 	import { type IconDefinition } from "@fortawesome/free-solid-svg-icons";
 	import { propertyStore } from "svelte-writable-derived";
 	import Fa from "svelte-fa";
 
-	export let icons: [IconDefinition, IconDefinition] | undefined = undefined;
-	export let props: CreateSliderProps;
-	export let solid: boolean = false;
-	export let value: number = 0;
+	interface Props {
+		icons?: [IconDefinition, IconDefinition] | undefined;
+		props: CreateSliderProps;
+		solid?: boolean;
+		value?: number;
+	}
+
+	let {
+		icons = undefined,
+		props,
+		solid = false,
+		value = $bindable(0)
+	}: Props = $props();
 
 	const {
 		states,
@@ -15,7 +26,9 @@
 	} = createSlider(props);
 
 	const sync = createSync({ value: propertyStore(states.value, 0) });
-	$: sync.value(value, (v) => (value = v));
+	run(() => {
+		sync.value(value, (v) => (value = v));
+	});
 </script>
 
 <div class="container">
@@ -25,17 +38,17 @@
 	<span use:melt={$root} class="root">
 		<span class="track">
 			{#if !solid}
-				<span use:melt={$range} />
+				<span use:melt={$range}></span>
 			{/if}
 		</span>
 
 		{#if $ticks.length - 1 <= 10}
 			{#each $ticks as tick}
-				<span use:melt={tick} class="tick" />
+				<span use:melt={tick} class="tick"></span>
 			{/each}
 		{/if}
 
-		<span use:melt={$thumbs[0]} class="thumb" />
+		<span use:melt={$thumbs[0]} class="thumb"></span>
 	</span>
 	{#if icons}
 		<Fa icon={icons[1]} />

@@ -22,7 +22,7 @@
 		needRefresh.set(false);
 	}
 
-	$: toast = $offlineReady || $needRefresh;
+	let toast = $derived($offlineReady || $needRefresh);
 </script>
 
 {#if toast}
@@ -35,9 +35,9 @@
 			{/if}
 		</div>
 		{#if $needRefresh}
-			<button class="primary" on:click={() => updateServiceWorker(true)}>Update</button>
+			<button class="primary" onclick={() => updateServiceWorker(true)}>Update</button>
 		{/if}
-		<button class="secondary" on:click={close}>Close</button>
+		<button class="secondary" onclick={close}>Close</button>
 	</div>
 {/if}
 

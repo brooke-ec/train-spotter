@@ -25,7 +25,7 @@
 		{#if quota && usage}
 			<div class="usage">{pretty(usage, { binary: true })} / {pretty(quota, { binary: true })}</div>
 			<div class="bar">
-				<div style="width: {(usage / quota) * 100}%;" />
+				<div style="width: {(usage / quota) * 100}%;"></div>
 			</div>
 		{/if}
 	{:catch}
@@ -36,7 +36,7 @@
 		<span class="alert green"><Fa icon={faCheckCircle} /> Persistent Storage Granted</span>
 	{:else}
 		<span class="alert red"><Fa icon={faXmarkCircle} /> Persistent Storage Refused</span>
-		<button class="primary" on:click={request}>Retry</button>
+		<button class="primary" onclick={request}>Retry</button>
 	{/if}
 </div>
 

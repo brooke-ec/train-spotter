@@ -16,7 +16,7 @@
 	<p class="secondary">Customise the appearance of the application.</p>
 	<h3>App</h3>
 	<hr />
-	<!-- svelte-ignore a11y-label-has-associated-control -->
+	<!-- svelte-ignore a11y_label_has_associated_control -->
 	<label>
 		Navbar Padding
 		<Slider
@@ -25,15 +25,15 @@
 		props={{ max: 30, step: 3 }}
 		/>
 	</label>
-	<!-- svelte-ignore a11y-label-has-associated-control -->
+	<!-- svelte-ignore a11y_label_has_associated_control -->
 	<label>
 		Accent Colour
-		<button on:click={resetAccent}><Fa icon={faArrowRotateRight} scale="0.85" /></button>
+		<button onclick={resetAccent}><Fa icon={faArrowRotateRight} scale="0.85" /></button>
 		<Slider bind:value={$accent} props={{ max: 360 }} />
 	</label>
 	<h3>List</h3>
 	<hr />
-	<!-- svelte-ignore a11y-label-has-associated-control -->
+	<!-- svelte-ignore a11y_label_has_associated_control -->
 	<label>
 		Grouping Period: <span class="secondary">{$grouping ? $grouping + " mins": "no grouping"}</span>
 		<Slider

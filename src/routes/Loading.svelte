@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import { gettable } from "$lib/util";
 	import { writable } from "svelte/store";
 	import { fade } from "svelte/transition";
@@ -21,7 +21,7 @@
 
 {#if $loading}
 	<div class="container" transition:fade>
-		<div class="loader" />
+		<div class="loader"></div>
 	</div>
 {/if}
 
