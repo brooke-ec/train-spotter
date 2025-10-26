@@ -12,7 +12,7 @@
 
 	interface Props {
 		data: PageData;
-		children?: import('svelte').Snippet;
+		children?: import("svelte").Snippet;
 	}
 
 	let { data, children }: Props = $props();
@@ -20,19 +20,21 @@
 
 <Loading />
 
-{#if data.path.length > 1}
-	<Backbar />
-{/if}
+<div style="flex-direction: column; display: flex; height: 100vh;">
+	{#if data.path.length > 1}
+		<Backbar />
+	{/if}
 
-<div style="overflow-x: hidden">
-	{#key data.path}
-		<main in:fly={{ x: -200, duration: 200, delay: 200 }} out:fly={{ x: 200, duration: 200 }}>
-			{@render children?.()}
-		</main>
-	{/key}
+	<div style="overflow-x: hidden; flex-grow: 1">
+		{#key data.path}
+			<main in:fly={{ x: -200, duration: 200, delay: 200 }} out:fly={{ x: 200, duration: 200 }}>
+				{@render children?.()}
+			</main>
+		{/key}
+	</div>
+
+	<Navbar />
 </div>
-
-<Navbar />
 
 <!-- PWA Metadata -->
 <svelte:head>

@@ -23,7 +23,6 @@
 
 <style lang="scss">
 	.group {
-		background-color: var(--bg-3);
 		flex-direction: column;
 		border-radius: 10px;
 		overflow: hidden;

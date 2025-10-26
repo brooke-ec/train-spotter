@@ -20,13 +20,11 @@
 body {
 	background-color: var(--bg-1);
 	color: white;
-
-	flex-direction: column;
-	display: flex;
 }
 
 main {
-	margin: 10px max(10px, calc(25vw * 0.1));
+	padding: 10px max(10px, calc(25vw * 0.1));
+	height: 100%;
 }
 
 hr {

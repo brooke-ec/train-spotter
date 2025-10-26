@@ -1,24 +1,21 @@
 <script lang="ts">
 	import LinkList from "$lib/components/LinkList.svelte";
 	import type { SchemaDoc } from "$lib/pouchdb/types";
-	import { db, onChange } from "$lib/pouchdb";
-	import { icons } from "$lib/util";
-	import Fa from "svelte-fa";
-	import { icon } from "@fortawesome/fontawesome-svg-core";
-	import type { name } from "@melt-ui/svelte";
 	import { spinner } from "../../Loading.svelte";
+	import { db, onChange } from "$lib/pouchdb";
 	import { goto } from "$app/navigation";
+	import { icons } from "$lib/util";
 
 	let schema: SchemaDoc[] | undefined = $state();
 	// Schema limit for db query, remove after implementing lazy loading
-	const schemaLimit: number = 20
+	const schemaLimit: number = 20;
 
 	onChange(async () => {
 		await db.createIndex({ index: { fields: ["name", "type"] } });
 		const result = await db.find({
-			selector: { $and: [{type: {$eq: "schema"}}, {name: { $gt: null }}] },
-			sort: [{ "name": "asc" }],
-			limit: schemaLimit + 5
+			selector: { $and: [{ type: { $eq: "schema" } }, { name: { $gt: null } }] },
+			sort: [{ name: "asc" }],
+			limit: schemaLimit + 5,
 		});
 		schema = result.docs as SchemaDoc[];
 	});
@@ -29,13 +26,15 @@
 
 		const id = crypto.randomUUID();
 
-		await spinner(db.put({
-			type: "schema",
-			icon: "faCube",
-			name: "new schema",
-			fields: [],
-			_id: id,
-		}));
+		await spinner(
+			db.put({
+				type: "schema",
+				icon: "faCube",
+				name: "new schema",
+				fields: [],
+				_id: id,
+			}),
+		);
 		goto("/settings/schema/" + id);
 	}
 </script>
@@ -64,5 +63,10 @@
 		<p class="secondary">{schema.length}/{schemaLimit} schemas</p>
 	{/if}
 
-	<button class="primary" style="align-self: flex-end;" disabled={schema == undefined || schema.length >= schemaLimit} onclick={create}>New Schema</button>
+	<button
+		class="primary"
+		style="align-self: flex-end;"
+		disabled={schema == undefined || schema.length >= schemaLimit}
+		onclick={create}>New Schema</button
+	>
 </div>
