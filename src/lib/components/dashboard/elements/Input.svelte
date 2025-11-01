@@ -1,6 +1,10 @@
-<script lang="ts">
-	import { run } from "svelte/legacy";
+<script lang="ts" module>
+	import * as z from "zod";
 
+	export const schema = z.object({});
+</script>
+
+<script lang="ts">
 	import { faHashtag, faFont, faTrash } from "@fortawesome/free-solid-svg-icons";
 	import { gettable, persist } from "$lib/util";
 	import { slide } from "svelte/transition";

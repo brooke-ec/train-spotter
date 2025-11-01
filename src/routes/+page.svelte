@@ -1,10 +1,13 @@
-<script lang="ts">
-	import SightingInput from "$lib/components/SightingInput.svelte";
-	import SightingList from "$lib/components/SightingList.svelte";
+<script lang="ts" module>
+	import * as z from "zod";
+
+	export const schema = z.object();
 </script>
 
-<SightingInput />
+<script lang="ts">
+	import Dashboard from "$lib/components/dashboard/Dashboard.svelte";
 
-<hr />
+	const elements = [{ type: "input" }, { type: "list" }];
+</script>
 
-<SightingList limit={10} />
+<Dashboard {elements} />

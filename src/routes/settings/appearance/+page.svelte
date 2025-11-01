@@ -20,9 +20,9 @@
 	<label>
 		Navbar Padding
 		<Slider
-		bind:value={$padding}
-		icons={[faGripLinesVertical, faArrowsLeftRightToLine]}
-		props={{ max: 30, step: 3 }}
+			bind:value={$padding}
+			icons={[faGripLinesVertical, faArrowsLeftRightToLine]}
+			props={{ max: 30, step: 3 }}
 		/>
 	</label>
 	<!-- svelte-ignore a11y_label_has_associated_control -->
@@ -35,10 +35,7 @@
 	<hr />
 	<!-- svelte-ignore a11y_label_has_associated_control -->
 	<label>
-		Grouping Period: <span class="secondary">{$grouping ? $grouping + " mins": "no grouping"}</span>
-		<Slider
-			bind:value={$grouping}
-			props={{ max: 60, step: 5}}
-		/>
+		Grouping Period: <span class="secondary">{$grouping ? $grouping + " mins" : "no grouping"}</span>
+		<Slider bind:value={$grouping} props={{ max: 60, step: 5 }} />
 	</label>
 </div>
