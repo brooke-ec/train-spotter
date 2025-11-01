@@ -5,7 +5,7 @@ export interface DashboardElement {
 	type: string;
 }
 
-export function get(type: string): Component {
+export function get(type: string): Component<any> {
 	if (!(type in ELEMENTS)) throw new Error(`Unknown dashboard element type: ${type}`);
-	return ELEMENTS[type as keyof typeof ELEMENTS];
+	return ELEMENTS[type as keyof typeof ELEMENTS].default;
 }
