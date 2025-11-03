@@ -20,9 +20,6 @@ importers:
       '@melt-ui/svelte':
         specifier: ^0.83.0
         version: 0.83.0(svelte@5.43.2)
-      '@rodrigodagostino/svelte-sortable-list':
-        specifier: ^2.1.6
-        version: 2.1.6(esm-env@1.2.2)(svelte@5.43.2)
       '@sveltejs/adapter-static':
         specifier: ^3.0.10
         version: 3.0.10(@sveltejs/kit@2.47.0(@sveltejs/vite-plugin-svelte@6.2.1(svelte@5.43.2)(vite@7.1.10(sass@1.93.2)(terser@5.44.0)))(svelte@5.43.2)(vite@7.1.10(sass@1.93.2)(terser@5.44.0)))
@@ -53,6 +50,9 @@ importers:
       svelte-check:
         specifier: ^4.3.3
         version: 4.3.3(picomatch@4.0.3)(svelte@5.43.2)(typescript@5.9.3)
+      svelte-dnd-action:
+        specifier: ^0.9.67
+        version: 0.9.67(svelte@5.43.2)
       svelte-fa:
         specifier: ^4.0.4
         version: 4.0.4(svelte@5.43.2)
@@ -872,12 +872,6 @@ packages:
 
   '@polka/url@1.0.0-next.29':
     resolution: {integrity: sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==}
-
-  '@rodrigodagostino/svelte-sortable-list@2.1.6':
-    resolution: {integrity: sha512-idv12/tOK51MaRhr6dNms7aXrgn5uDGlHTbmqdfA0FYzvWTQUVSY+n+/hAeMpNHt6JhqnQc2jVIPEnrDsx9j0A==}
-    peerDependencies:
-      esm-env: ^1.0.0
-      svelte: ^5.0.0
 
   '@rollup/plugin-babel@5.3.1':
     resolution: {integrity: sha512-WFfdLWU/xVWKeRQnKmIAQULUI7Il0gZnBIH/ZFO069wYIfPu+8zrfp/KMW0atmELoRDq8FbiP3VCss9MhCut7Q==}
@@ -1983,6 +1977,11 @@ packages:
     peerDependencies:
       svelte: ^4.0.0 || ^5.0.0-next.0
       typescript: '>=5.0.0'
+
+  svelte-dnd-action@0.9.67:
+    resolution: {integrity: sha512-yEJQZ9SFy3O4mnOdtjwWyotRsWRktNf4W8k67zgiLiMtMNQnwCyJHBjkGMgZMDh8EGZ4gr88l+GebBWoHDwo+g==}
+    peerDependencies:
+      svelte: '>=3.23.0 || ^5.0.0-next.0'
 
   svelte-fa@4.0.4:
     resolution: {integrity: sha512-85BomCGkTrH8kPDGvb8JrVwq9CqR9foprbKjxemP4Dtg3zPR7OXj5hD0xVYK0C+UCzFI1zooLoK/ndIX6aYXAw==}
@@ -3104,11 +3103,6 @@ snapshots:
     optional: true
 
   '@polka/url@1.0.0-next.29': {}
-
-  '@rodrigodagostino/svelte-sortable-list@2.1.6(esm-env@1.2.2)(svelte@5.43.2)':
-    dependencies:
-      esm-env: 1.2.2
-      svelte: 5.43.2
 
   '@rollup/plugin-babel@5.3.1(@babel/core@7.28.5)(rollup@2.79.2)':
     dependencies:
@@ -4333,6 +4327,10 @@ snapshots:
       typescript: 5.9.3
     transitivePeerDependencies:
       - picomatch
+
+  svelte-dnd-action@0.9.67(svelte@5.43.2):
+    dependencies:
+      svelte: 5.43.2
 
   svelte-fa@4.0.4(svelte@5.43.2):
     dependencies:
