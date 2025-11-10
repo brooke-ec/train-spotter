@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { SchemaDoc } from "$lib/pouchdb/types";
+	import Select from "$lib/components/Select.svelte";
 
 	let { field = $bindable() }: { field: SchemaDoc["fields"][number] } = $props();
 </script>
@@ -8,6 +9,10 @@
 	<label>
 		Name:
 		<input type="text" autocomplete="off" placeholder="Field Name" bind:value={field.name} />
+	</label>
+	<label>
+		Type:
+		<Select bind:value={field.type.type} options={["string", "number", "select"]} />
 	</label>
 </div>
 

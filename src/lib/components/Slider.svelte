@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import { createSlider, melt, createSync, type CreateSliderProps } from "@melt-ui/svelte";
 	import { type IconDefinition } from "@fortawesome/free-solid-svg-icons";
 	import { propertyStore } from "svelte-writable-derived";
@@ -13,12 +11,7 @@
 		value?: number;
 	}
 
-	let {
-		icons = undefined,
-		props,
-		solid = false,
-		value = $bindable(0)
-	}: Props = $props();
+	let { icons = undefined, props, solid = false, value = $bindable(0) }: Props = $props();
 
 	const {
 		states,
@@ -26,9 +19,7 @@
 	} = createSlider(props);
 
 	const sync = createSync({ value: propertyStore(states.value, 0) });
-	run(() => {
-		sync.value(value, (v) => (value = v));
-	});
+	$effect(() => sync.value(value, (v) => (value = v)));
 </script>
 
 <div class="container">
