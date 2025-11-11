@@ -25,8 +25,7 @@
 		props={{ max: 30, step: 3 }}
 		/>
 	</label>
-	<!-- svelte-ignore a11y_label_has_associated_control -->
-	<label>
+	<div class="label">
 		Accent Colour
 		<button onclick={resetAccent}><Fa icon={faArrowRotateRight} scale="0.85" /></button>
 		<Slider bind:value={$accent} props={{ max: 360 }} />

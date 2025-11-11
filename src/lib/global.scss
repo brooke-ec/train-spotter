@@ -105,9 +105,20 @@ a[href] {
 	}
 }
 
-label {
+label,
+.label {
 	text-transform: lowercase;
 	font-variant: small-caps;
+
+	&:has(hr) {
+		display: flex;
+		gap: 10px;
+
+		& > hr {
+			display: inline-block;
+			flex-grow: 1;
+		}
+	}
 }
 
 p.secondary,
