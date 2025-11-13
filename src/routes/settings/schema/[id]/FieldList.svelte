@@ -76,13 +76,13 @@
 
 <style lang="scss">
 	.container {
-		background-color: var(--bg-2);
+		background-color: var(--bg-3);
 		border-radius: 5px;
 		overflow: hidden;
 	}
 
 	.field {
-		background-color: var(--bg-2);
+		background-color: var(--bg-3);
 	}
 
 	button {
@@ -108,8 +108,9 @@
 	}
 
 	.content {
+		background-color: var(--bg-2);
 		overflow: hidden;
-		padding: 0 10px;
+		padding: 0 10px 10px 10px;
 	}
 
 	#dnd-action-dragged-el {

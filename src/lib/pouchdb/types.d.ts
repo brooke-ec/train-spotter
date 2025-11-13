@@ -25,4 +25,12 @@ export type SchemaDoc = PouchDB.Core.ExistingDocument<{
 	}[];
 }>;
 
+export type SchemaFieldType =
+	| { name: "string" }
+	| { name: "number" }
+	| { name: "boolean" }
+	| { name: "select"; options: string[] };
+
+export type SchemaDefaultValue = { type: "fixed"; value: string } | { type: "none" };
+
 export type AnyDoc = Omit<SightingDoc | SchemaDoc, "_rev", "_id">;

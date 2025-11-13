@@ -60,7 +60,7 @@
 	}
 
 	.drop {
-		background-color: var(--bg-3);
+		background-color: var(--bg-2);
 		border-radius: 5px;
 		overflow: hidden;
 	}
