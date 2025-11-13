@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { run } from "svelte/legacy";
-
 	import { faHashtag, faFont, faTrash } from "@fortawesome/free-solid-svg-icons";
 	import { gettable, persist } from "$lib/util";
 	import { slide } from "svelte/transition";
