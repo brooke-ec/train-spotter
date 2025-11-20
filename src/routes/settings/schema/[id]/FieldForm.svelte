@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { SchemaDoc } from "$lib/pouchdb/types";
+	import InitialForm from "./InitialForm.svelte";
 	import TypeForm from "./TypeForm.svelte";
 
 	let { field = $bindable() }: { field: SchemaDoc["fields"][number] } = $props();
@@ -11,6 +12,7 @@
 		<input type="text" autocomplete="off" placeholder="Field Name" bind:value={field.name} />
 	</label>
 	<TypeForm bind:type={field.type} />
+	<InitialForm bind:initial={field.initial} />
 </div>
 
 <style lang="scss">

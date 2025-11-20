@@ -28,8 +28,8 @@
 		fields.push({
 			name,
 			id: name,
-			type: { type: "string" },
-			defaultValue: { type: "none" },
+			type: { name: "string" },
+			initial: { type: "none" },
 		});
 	}
 

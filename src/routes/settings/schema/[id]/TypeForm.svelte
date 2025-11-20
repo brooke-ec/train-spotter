@@ -4,12 +4,6 @@
 	import ListInput from "$lib/components/ListInput.svelte";
 
 	let { type = $bindable() }: { type: SchemaFieldType } = $props();
-
-	$effect(() => {
-		if (type.name === "select" && type.options === undefined) type.options = [];
-		// @ts-ignore
-		else if (type.name !== "select") delete type.options;
-	});
 </script>
 
 <div>
@@ -25,6 +19,3 @@
 		<ListInput bind:value={type.options} placeholder="Option Name" />
 	</label>
 {/if}
-
-<style lang="scss">
-</style>

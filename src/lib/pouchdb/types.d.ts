@@ -1,7 +1,5 @@
 /// <reference types="pouchdb-core" />
 
-import type { SchemaFieldType, SchemaDefaultValue } from "$lib/types";
-
 export type SightingDoc = PouchDB.Core.ExistingDocument<{
 	identification: string;
 	type: "sighting";
@@ -21,7 +19,7 @@ export type SchemaDoc = PouchDB.Core.ExistingDocument<{
 	fields: {
 		name: string;
 		type: SchemaFieldType;
-		defaultValue: SchemaDefaultValue;
+		initial: SchemaFieldInitial;
 	}[];
 }>;
 
@@ -31,6 +29,9 @@ export type SchemaFieldType =
 	| { name: "boolean" }
 	| { name: "select"; options: string[] };
 
-export type SchemaDefaultValue = { type: "fixed"; value: string } | { type: "none" };
+export type SchemaFieldInitial =
+	| { type: "derived"; url: string }
+	| { type: "fixed"; value: string }
+	| { type: "none" };
 
 export type AnyDoc = Omit<SightingDoc | SchemaDoc, "_rev", "_id">;
