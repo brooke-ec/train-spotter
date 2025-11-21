@@ -92,7 +92,7 @@
 						placeholder="700128"
 						bind:value={input.value}
 						bind:this={input.binds.simple}
-						on:keydown={(e) => keyDown(e, i)}
+						onkeydown={(e) => keyDown(e, i)}
 						tabindex={!input.simple ? -1 : undefined}
 					/>
 					<input
@@ -103,19 +103,20 @@
 						placeholder="700128"
 						bind:value={inputs[i].value}
 						bind:this={input.binds.advanced}
-						on:keydown={(e) => keyDown(e, i)}
+						onkeydown={(e) => keyDown(e, i)}
 						tabindex={input.simple ? -1 : undefined}
 					/>
-					<button class="secondary" on:click={() => toggle(i)}>
+					<button class="secondary" onclick={() => toggle(i)}>
 						<Fa icon={input.simple ? faHashtag : faFont} />
 					</button>
 				</span>
 			{/each}
 		</div>
+		<input type="text" class="hidden" onfocus={() => focus(0)} />
 	</label>
 	<span>
-		<button class="primary" on:click={submit}>Submit</button>
-		<button class="primary" on:click={clear}><Fa icon={faTrash} /></button>
+		<button class="primary" onclick={submit}>Submit</button>
+		<button class="primary" onclick={clear}><Fa icon={faTrash} /></button>
 	</span>
 </div>
 

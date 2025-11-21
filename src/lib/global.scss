@@ -35,7 +35,7 @@ hr {
 	margin: 10px 0;
 }
 
-input[type="text"],
+input[type="text"]:not(.hidden),
 input[type="number"],
 input[type="url"],
 input[type="password"] {
@@ -51,6 +51,11 @@ input[type="password"] {
 	&:focus-within {
 		border-color: var(--a-2);
 	}
+}
+
+input.hidden {
+	position: absolute;
+	opacity: 0;
 }
 
 button {
@@ -106,7 +111,8 @@ label {
 	font-variant: small-caps;
 }
 
-p.secondary, span.secondary{
+p.secondary,
+span.secondary {
 	color: var(--bg-4);
 }
 
