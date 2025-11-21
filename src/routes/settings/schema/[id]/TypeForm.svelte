@@ -13,7 +13,7 @@
 	<Select bind:value={type.name} options={["string", "number", "boolean", "select"]} />
 </div>
 
-{#if type.name === "select" && type.options !== undefined}
+{#if type.name === "select"}
 	<label>
 		Options:
 		<ListInput bind:value={type.options} placeholder="Option Name" />

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { slide } from "svelte/transition";
 
-	let { value = $bindable([]), placeholder = "value" }: { value: string[]; placeholder?: string } =
-		$props();
+	let { value = $bindable(), placeholder = "value" }: { value: string[]; placeholder?: string } = $props();
 	let inputs: HTMLInputElement[] = $state([]);
+	value = value ?? [];
 
 	$effect(() => {
 		if (!value.some((i) => i == "")) value.push("");
