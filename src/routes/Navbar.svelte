@@ -18,7 +18,7 @@
 	let margin = $state(0);
 </script>
 
-<div style="height: {margin}px;"></div>
+<div style="height: {margin + 10}px;"></div>
 <nav style="padding-bottom: {$padding}px;" bind:clientHeight={margin}>
 	{#each entries as { href, icon, label }}
 		<a {href} class:active={page.data.path[0] == href.split("/")[1]}>
