@@ -114,7 +114,7 @@
 	}
 
 	#dnd-action-dragged-el {
-		background-color: var(--bg-3) !important;
+		background-color: var(--bg-4) !important;
 		border-radius: 5px !important;
 	}
 </style>
