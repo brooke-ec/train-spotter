@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { faBars, faChevronRight, faPlus } from "@fortawesome/free-solid-svg-icons";
+	import { faBars, faChevronRight, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 	import { dragHandleZone, dragHandle, type DndEvent } from "svelte-dnd-action";
 	import { createAccordion, melt } from "@melt-ui/svelte";
 	import type { SchemaDoc } from "$lib/pouchdb/types";
@@ -33,6 +33,12 @@
 		});
 	}
 
+	function remove(id: string) {
+		const name = fields.find((f) => f.id === id)?.name || id;
+		if (confirm(`Are you sure you want to delete the field "${name}"? This action cannot be undone.`))
+			fields = fields.filter((f) => f.id !== id);
+	}
+
 	function handleDndConsider(e: CustomEvent<DndEvent<IdField>>) {
 		fields = e.detail.items;
 	}
@@ -53,13 +59,19 @@
 			{@const props = { value: field.id }}
 			<div use:melt={$item(props)} class="field" animate:flip={{ duration: flipDurationMs }}>
 				<div style="display: flex; align-items: center">
-					<button use:melt={$trigger(props)}>
+					<button class="row" use:melt={$trigger(props)}>
 						<span class="chevron" class:rotated={$isSelected(props.value)}>
 							<Fa icon={faChevronRight} />
 						</span>
 						{field.name.length > 0 ? field.name : "Unnamed Field"}
 					</button>
-					<span class="handle" use:dragHandle><Fa icon={faBars} /></span>
+					{#if $isSelected(props.value)}
+						<button class="handle" onclick={() => remove(props.value)}>
+							<Fa icon={faTrash} />
+						</button>
+					{:else}
+						<span class="handle" use:dragHandle><Fa icon={faBars} /></span>
+					{/if}
 				</div>
 				{#if $isSelected(props.value)}
 					<div use:melt={$content(props)} transition:slide class="content">
@@ -69,7 +81,7 @@
 			</div>
 		{/each}
 	</div>
-	<button onclick={add}>
+	<button onclick={add} class="row">
 		<Fa icon={faPlus} /> Add Field
 	</button>
 </div>
@@ -85,7 +97,7 @@
 		background-color: var(--bg-3);
 	}
 
-	button {
+	.row {
 		justify-content: left;
 		align-items: center;
 		display: flex;
