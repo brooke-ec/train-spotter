@@ -12,7 +12,7 @@
 		<input type="text" autocomplete="off" placeholder="Field Name" bind:value={field.name} />
 	</label>
 	<TypeForm bind:type={field.type} />
-	<InitialForm bind:initial={field.initial} />
+	<InitialForm bind:field />
 </div>
 
 <style lang="scss">

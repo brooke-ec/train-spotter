@@ -1,8 +1,9 @@
 <script lang="ts">
-	import type { SchemaFieldInitial } from "$lib/pouchdb/types";
+	import SchemaField from "$lib/components/SchemaField.svelte";
+	import type { SchemaDoc } from "$lib/pouchdb/types";
 	import Select from "$lib/components/Select.svelte";
 
-	let { initial = $bindable() }: { initial: SchemaFieldInitial } = $props();
+	let { field = $bindable() }: { field: SchemaDoc["fields"][number] } = $props();
 </script>
 
 <div>
@@ -10,21 +11,21 @@
 		Initial Value
 		<hr />
 	</div>
-	<Select bind:value={initial.type} options={["none", "fixed", "derived"]} />
+	<Select bind:value={field.initial.type} options={["none", "fixed", "derived"]} />
 </div>
 
-{#if initial.type === "fixed"}
+{#if field.initial.type === "fixed"}
 	<label>
 		Value:
-		<input type="text" autocomplete="off" bind:value={initial.value} placeholder="foobar" />
+		<SchemaField field={field.type} bind:value={field.initial.value} />
 	</label>
-{:else if initial.type === "derived"}
+{:else if field.initial.type === "derived"}
 	<label>
 		Derive Handler URL:
 		<input
 			type="text"
 			autocomplete="off"
-			bind:value={initial.url}
+			bind:value={field.initial.url}
 			placeholder="https://spotter.pages.dev/derive/station"
 		/>
 	</label>
