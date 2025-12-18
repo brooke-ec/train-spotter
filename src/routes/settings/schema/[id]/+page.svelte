@@ -5,6 +5,7 @@
 	import { db } from "$lib/pouchdb";
 	import { icons } from "$lib/util";
 	import Fa from "svelte-fa";
+	import IconSelect from "$lib/components/IconSelect.svelte";
 
 	let { data } = $props();
 	let schema = $state(data.schema);
@@ -26,9 +27,6 @@
 
 <div style="height: 100%; display: flex; flex-direction: column;">
 	<h1>
-		{#if data.schema.icon in icons}
-			<Fa icon={icons[data.schema.icon]} /> -
-		{/if}
 		{data.schema.name}
 	</h1>
 
@@ -36,6 +34,11 @@
 		<label>
 			Name:
 			<input type="text" autocomplete="off" placeholder="Schema Name" bind:value={schema.name} />
+		</label>
+
+		<label>
+			Icon:
+			<IconSelect bind:value={schema.icon} />
 		</label>
 
 		<div>
