@@ -126,6 +126,7 @@
 		background-color: #717171;
 		border-radius: 5px;
 		overflow-y: scroll;
+		z-index: 100;
 	}
 
 	.item {
