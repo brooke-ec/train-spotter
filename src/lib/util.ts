@@ -33,3 +33,8 @@ export const icons = Object.fromEntries(
 			typeof entry[1] === "object" && "iconName" in entry[1] && "icon" in entry[1],
 	),
 );
+
+export function titleCase(s: string) {
+	const result = s.replace(/([A-Z])/g, " $1");
+	return result.charAt(0).toUpperCase() + result.slice(1);
+}
