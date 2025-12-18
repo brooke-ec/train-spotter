@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { goto, invalidateAll } from "$app/navigation";
 	import { spinner } from "../../../Loading.svelte";
 	import FieldInput from "./FieldList.svelte";
-	import { goto, invalidateAll } from "$app/navigation";
 	import { db } from "$lib/pouchdb";
 	import { icons } from "$lib/util";
 	import Fa from "svelte-fa";
