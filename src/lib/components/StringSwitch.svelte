@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Switch from "./Switch.svelte";
 
-	let { value = $bindable("false") }: { value: string } = $props();
+	let { value = $bindable() }: { value: string } = $props();
 	let raw = $state(false);
 
 	$effect(() => {
