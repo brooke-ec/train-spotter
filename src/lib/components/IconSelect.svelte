@@ -66,6 +66,7 @@
 			index = 0;
 			loaded = [];
 			loader.reset();
+			drop?.scrollTo(0, 0);
 			load();
 		},
 	);
