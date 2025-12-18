@@ -1,11 +1,9 @@
 <script lang="ts">
+	import IconSelect from "../../../../lib/components/IconSelect.svelte";
 	import { goto, invalidateAll } from "$app/navigation";
 	import { spinner } from "../../../Loading.svelte";
 	import FieldInput from "./FieldList.svelte";
 	import { db } from "$lib/pouchdb";
-	import { icons } from "$lib/util";
-	import Fa from "svelte-fa";
-	import IconSelect from "$lib/components/IconSelect.svelte";
 
 	let { data } = $props();
 	let schema = $state(data.schema);
