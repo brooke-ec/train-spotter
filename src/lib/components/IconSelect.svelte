@@ -4,8 +4,8 @@
 	import { InfiniteLoader, LoaderState } from "svelte-infinite";
 	import { icons, titleCase } from "$lib/util";
 	import { fade } from "svelte/transition";
-	import Fa from "svelte-fa";
 	import { watch } from "runed";
+	import Fa from "svelte-fa";
 
 	let { value = $bindable() }: { value: string } = $props();
 
@@ -19,7 +19,7 @@
 		forceVisible: true,
 		positioning: {
 			// @ts-ignore
-			overflowPadding: { bottom: 100 },
+			overflowPadding: { bottom: 10 },
 			placement: "bottom",
 			fitViewport: true,
 			sameWidth: true,
