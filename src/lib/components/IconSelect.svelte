@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 	import { createCombobox, melt, type ComboboxSelected } from "@melt-ui/svelte";
-	import { InfiniteLoader, LoaderState } from "svelte-infinite";
+	import VirtualList from "svelte-tiny-virtual-list";
 	import { icons, titleCase } from "$lib/util";
 	import { fade } from "svelte/transition";
-	import Fa from "svelte-fa";
 	import { watch } from "runed";
+	import Fa from "svelte-fa";
 
 	let { value = $bindable() }: { value: string } = $props();
 
@@ -14,7 +14,7 @@
 
 	const {
 		elements: { menu, input, option },
-		states: { open, inputValue, selected },
+		states: { open, inputValue, touchedInput, selected },
 	} = createCombobox<string, false, ComboboxSelected<false, string>>({
 		forceVisible: true,
 		positioning: {
@@ -39,35 +39,8 @@
 		else $inputValue = "";
 	});
 
-	let drop = $state<HTMLDivElement>();
-	let loaded: string[] = $state([]);
-	let loader = new LoaderState();
-	let index = 0;
-
-	async function load() {
-		for (let i = 0; i < 50; i++) {
-			if (index >= keys.length) {
-				loader.complete();
-				return;
-			}
-
-			const key = keys[index];
-			if (key.toLowerCase().includes($inputValue.toLowerCase())) loaded.push(key);
-			else i--;
-			index++;
-		}
-
-		loader.loaded();
-	}
-
-	watch(
-		() => $inputValue,
-		() => {
-			index = 0;
-			loaded = [];
-			loader.reset();
-			load();
-		},
+	let filtered = $derived(
+		$touchedInput ? keys.filter((k) => k.toLowerCase().includes($inputValue.toLowerCase())) : keys,
 	);
 </script>
 
@@ -80,23 +53,16 @@
 </div>
 
 {#if $open}
-	<div use:melt={$menu} class="drop" transition:fade={{ duration: 150 }} bind:this={drop}>
-		{#await new Promise((r) => requestAnimationFrame(r)) then}
-			<InfiniteLoader
-				triggerLoad={load}
-				loaderState={loader}
-				intersectionOptions={{ root: drop }}
-				loopMaxCalls={Number.POSITIVE_INFINITY}
-			>
-				{#each loaded as key (key)}
-					{@const props = toOption(key)}
-					<div use:melt={$option(props)} class="item">
-						<Fa icon={icons[key]} />
-						{props.label}
-					</div>
-				{/each}
-			</InfiniteLoader>
-		{/await}
+	<div use:melt={$menu} class="drop" transition:fade={{ duration: 150 }}>
+		<VirtualList width="100%" height={300} itemCount={filtered.length} itemSize={30}>
+			{#snippet item({ index, style })}
+				{@const props = toOption(filtered[index])}
+				<div {style} use:melt={$option(props)} class="item">
+					<Fa icon={icons[props.value]} />
+					{props.label}
+				</div>
+			{/snippet}
+		</VirtualList>
 	</div>
 {/if}
 

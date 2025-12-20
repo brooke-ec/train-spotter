@@ -11,7 +11,7 @@
 </script>
 
 <div class="group">
-	{#each items as item}
+	{#each items as item (item.url)}
 		<a href={item.url}>
 			<Fa icon={item.icon} />
 			<span class="title">{item.title}</span>
