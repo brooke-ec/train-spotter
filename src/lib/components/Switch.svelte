@@ -1,22 +1,16 @@
 <script lang="ts">
-	import { createSwitch, createSync, melt } from "@melt-ui/svelte";
+	import { Toggle } from "melt/builders";
 
 	let { value = $bindable(false) }: { value?: boolean } = $props();
 
-	const {
-		elements: { root, input },
-		states: { checked },
-	} = createSwitch();
-
-	const sync = createSync({ value: checked });
-	$effect(() => sync.value(value, (v) => (value = v)));
+	const toggle = new Toggle({ value: () => value, onValueChange: (v) => (value = v) });
 </script>
 
 <div>
-	<button use:melt={$root}>
+	<button {...toggle.trigger} aria-label="toggle">
 		<span class="thumb"></span>
 	</button>
-	<input use:melt={$input} />
+	<input {...toggle.hiddenInput} />
 </div>
 
 <style lang="scss">
@@ -41,7 +35,7 @@
 		transform: translateX(0);
 	}
 
-	button[data-state="checked"] {
+	button[data-checked] {
 		background-color: var(--a-1);
 
 		.thumb {

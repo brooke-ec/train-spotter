@@ -19,7 +19,7 @@
 		forceVisible: true,
 		positioning: {
 			// @ts-ignore
-			overflowPadding: { bottom: 100 },
+			overflowPadding: { bottom: 10 },
 			placement: "bottom",
 			fitViewport: true,
 			sameWidth: true,
@@ -92,6 +92,7 @@
 		background-color: #717171;
 		border-radius: 5px;
 		overflow-y: scroll;
+		z-index: 100;
 	}
 
 	.item {
