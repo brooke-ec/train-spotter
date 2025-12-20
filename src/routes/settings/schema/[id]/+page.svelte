@@ -9,7 +9,7 @@
 	let schema = $state(data.schema);
 
 	async function save() {
-		spinner(db.put(schema));
+		await spinner(db.put(schema));
 		await invalidateAll();
 	}
 
