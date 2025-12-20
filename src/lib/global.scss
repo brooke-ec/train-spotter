@@ -176,3 +176,10 @@ span.alert {
 .infinite-status-prompt {
 	display: none;
 }
+
+[popover] {
+	text-transform: none;
+	font-variant: normal;
+	color: white;
+	border: none;
+}

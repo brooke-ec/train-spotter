@@ -1,47 +1,32 @@
 <script lang="ts">
 	import { faCheck, faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-	import { createSelect, createSync, melt } from "@melt-ui/svelte";
+	import { Select } from "melt/builders";
 	import { fade } from "svelte/transition";
 	import Fa from "svelte-fa";
 
 	let { value = $bindable(), options }: { value?: string; options: string[] } = $props();
 
-	const {
-		elements: { trigger, menu, option },
-		states: { selectedLabel, open, selected },
-		helpers: { isSelected },
-	} = createSelect<string>({
-		forceVisible: true,
-		positioning: {
-			placement: "bottom",
-			fitViewport: true,
-			sameWidth: true,
-		},
+	const select = new Select<string>({
+		value: value,
+		onValueChange: (v) => (value = v ?? undefined),
 	});
-
-	const sync = createSync({ value: selected });
-	$effect(() =>
-		sync.value(value == undefined ? undefined : { value, label: value }, (v) => (value = v?.value)),
-	);
 </script>
 
-<button use:melt={$trigger} class="button">
-	{$selectedLabel || "Select an option"}
-	<span class="chevron"><Fa icon={$open ? faChevronUp : faChevronDown} /></span>
+<button {...select.trigger} class="button">
+	{select.value ?? "Select an option"}
+	<span class="chevron"><Fa icon={select.content["data-open"] ? faChevronUp : faChevronDown} /></span>
 </button>
 
-{#if $open}
-	<div use:melt={$menu} class="drop" transition:fade={{ duration: 150 }}>
-		{#each options as item}
-			<div use:melt={$option({ value: item, label: item })} class="item">
-				{#if $isSelected(item)}
-					<Fa icon={faCheck} />
-				{/if}
-				{item}
-			</div>
-		{/each}
-	</div>
-{/if}
+<div {...select.content} class="drop" transition:fade={{ duration: 150 }}>
+	{#each options as item (item)}
+		<div {...select.getOption(item)} class="item">
+			{#if select.isSelected(item)}
+				<Fa icon={faCheck} />
+			{/if}
+			{item}
+		</div>
+	{/each}
+</div>
 
 <style lang="scss">
 	.button {

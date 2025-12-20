@@ -22,19 +22,20 @@
 		<Slider
 			bind:value={$padding}
 			icons={[faGripLinesVertical, faArrowsLeftRightToLine]}
-			props={{ max: 30, step: 3 }}
+			max={30}
+			step={3}
 		/>
 	</label>
 	<div class="label">
 		Accent Colour
 		<button onclick={resetAccent}><Fa icon={faArrowRotateRight} scale="0.85" /></button>
-		<Slider bind:value={$accent} props={{ max: 360 }} />
+		<Slider bind:value={$accent} max={360} />
 	</div>
 	<h3>List</h3>
 	<hr />
 	<!-- svelte-ignore a11y_label_has_associated_control -->
 	<label>
 		Grouping Period: <span class="secondary">{$grouping ? $grouping + " mins" : "no grouping"}</span>
-		<Slider bind:value={$grouping} props={{ max: 60, step: 5 }} />
+		<Slider bind:value={$grouping} max={60} step={5} />
 	</label>
 </div>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { faBars, faChevronRight, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 	import { dragHandleZone, dragHandle, type DndEvent } from "svelte-dnd-action";
-	import { createAccordion, melt } from "@melt-ui/svelte";
+	import { Accordion } from "melt/builders";
 	import type { SchemaDoc } from "$lib/pouchdb/types";
 	import FieldForm from "./FieldForm.svelte";
 	import { slide } from "svelte/transition";
@@ -17,10 +17,7 @@
 		schema.fields = fields.map((f) => (({ id, ...r }) => r)(f));
 	});
 
-	const {
-		elements: { content, item, trigger, root },
-		helpers: { isSelected },
-	} = createAccordion();
+	const accordion = new Accordion();
 
 	function add() {
 		const count = fields.filter((f) => f.id.match(/^New Field( \d+)?$/)).length;
@@ -50,31 +47,31 @@
 
 <div class="container">
 	<div
-		{...$root}
+		{...accordion.root}
 		use:dragHandleZone={{ items: fields, flipDurationMs, dropTargetStyle: {} }}
 		onconsider={handleDndConsider}
 		onfinalize={handleDndFinalize}
 	>
 		{#each fields as field, i (field.id)}
-			{@const props = { value: field.id }}
-			<div use:melt={$item(props)} class="field" animate:flip={{ duration: flipDurationMs }}>
-				<div style="display: flex; align-items: center">
-					<button class="row" use:melt={$trigger(props)}>
-						<span class="chevron" class:rotated={$isSelected(props.value)}>
+			{@const item = accordion.getItem({ id: field.id })}
+			<div class="field" animate:flip={{ duration: flipDurationMs }}>
+				<div {...item.heading} style="display: flex; align-items: center">
+					<button class="row" {...item.trigger}>
+						<span class="chevron" class:rotated={accordion.isExpanded(field.id)}>
 							<Fa icon={faChevronRight} />
 						</span>
 						{field.name.length > 0 ? field.name : "Unnamed Field"}
 					</button>
-					{#if $isSelected(props.value)}
-						<button class="handle" onclick={() => remove(props.value)}>
+					{#if accordion.isExpanded(field.id)}
+						<button class="handle" onclick={() => remove(field.id)}>
 							<Fa icon={faTrash} />
 						</button>
 					{:else}
 						<span class="handle" use:dragHandle><Fa icon={faBars} /></span>
 					{/if}
 				</div>
-				{#if $isSelected(props.value)}
-					<div use:melt={$content(props)} transition:slide class="content">
+				{#if accordion.isExpanded(field.id)}
+					<div {...item.content} transition:slide class="content">
 						<FieldForm bind:field={fields[i]} />
 					</div>
 				{/if}

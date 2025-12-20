@@ -1,65 +1,60 @@
 <script lang="ts">
 	import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-	import { createCombobox, melt, type ComboboxSelected } from "@melt-ui/svelte";
+	import { Combobox } from "melt/builders";
 	import VirtualList from "svelte-tiny-virtual-list";
 	import { icons, titleCase } from "$lib/util";
 	import { fade } from "svelte/transition";
-	import { watch } from "runed";
 	import Fa from "svelte-fa";
 
 	let { value = $bindable() }: { value: string } = $props();
 
 	const keys = Object.keys(icons);
-	const toOption = (key: string) => ({ value: key, label: titleCase(key.substring(2)) });
+	const toLabel = (key: string) => titleCase(key.substring(2));
 
-	const {
-		elements: { menu, input, option },
-		states: { open, inputValue, touchedInput, selected },
-	} = createCombobox<string, false, ComboboxSelected<false, string>>({
-		forceVisible: true,
-		positioning: {
-			// @ts-ignore
-			overflowPadding: { bottom: 10 },
-			placement: "bottom",
-			fitViewport: true,
-			sameWidth: true,
+	let internalInputValue = $state("");
+	let isOpen = $state(false);
+
+	const combobox = new Combobox<string>({
+		value: () => value ?? "faCube",
+		open: () => isOpen,
+		inputValue: () => (isOpen ? internalInputValue : toLabel(value ?? "faCube")),
+		onValueChange: (v) => {
+			value = v ?? value;
+		},
+		onInputValueChange: (v) => {
+			internalInputValue = v;
+		},
+		onOpenChange: (open) => {
+			isOpen = open;
+			if (open) internalInputValue = "";
 		},
 	});
 
-	$effect(() => {
-		$selected = toOption(value ?? "faCube");
-	});
-
-	$effect(() => {
-		value = $selected?.value ?? value;
-	});
-
-	$effect(() => {
-		if (!$open) $inputValue = $selected?.label ?? "";
-		else $inputValue = "";
-	});
-
 	let filtered = $derived(
-		$touchedInput ? keys.filter((k) => k.toLowerCase().includes($inputValue.toLowerCase())) : keys,
+		combobox.touched
+			? keys.filter((k) => k.toLowerCase().includes(combobox.inputValue.toLowerCase()))
+			: keys,
 	);
 </script>
 
 <div style="position: relative;">
-	<input type="text" use:melt={$input} class="input" placeholder={$selected?.label ?? ""} />
+	<input type="text" {...combobox.input} class="input" placeholder={toLabel(value ?? "faCube")} />
 	<div class="overlay">
 		<span class="icon"><Fa icon={icons[value ?? "faCube"]} /></span>
-		<span class="chevron"><Fa icon={$open ? faChevronUp : faChevronDown} /></span>
+		<span class="chevron"><Fa icon={isOpen ? faChevronUp : faChevronDown} /></span>
 	</div>
 </div>
 
-{#if $open}
-	<div use:melt={$menu} class="drop" transition:fade={{ duration: 150 }}>
-		<VirtualList width="100%" height={300} itemCount={filtered.length} itemSize={30}>
+{#if isOpen}
+	<div {...combobox.content} class="drop" transition:fade={{ duration: 150 }}>
+		<VirtualList width="100%" height={combobox.availableHeight} itemCount={filtered.length} itemSize={25}>
 			{#snippet item({ index, style })}
-				{@const props = toOption(filtered[index])}
-				<div {style} use:melt={$option(props)} class="item">
-					<Fa icon={icons[props.value]} />
-					{props.label}
+				{@const key = filtered[index]}
+				{@const label = toLabel(key)}
+				<!-- todo: fix not closing -->
+				<div {style} {...combobox.getOption(key, label)} class="item">
+					<Fa icon={icons[key]} />
+					{label}
 				</div>
 			{/snippet}
 		</VirtualList>
