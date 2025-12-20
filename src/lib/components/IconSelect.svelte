@@ -16,7 +16,7 @@
 
 	const combobox = new Combobox<string>({
 		value: () => value ?? "faCube",
-		open: () => isOpen,
+		// open: () => isOpen,
 		inputValue: () => (isOpen ? internalInputValue : toLabel(value ?? "faCube")),
 		onValueChange: (v) => {
 			value = v ?? value;
@@ -56,7 +56,6 @@
 			{#snippet item({ index, style })}
 				{@const key = filtered[index]}
 				{@const label = toLabel(key)}
-				<!-- todo: fix not closing -->
 				<div {style} {...combobox.getOption(key, label)} class="item">
 					<Fa icon={icons[key]} />
 					{label}
@@ -102,12 +101,12 @@
 		display: grid;
 		grid-template-columns: 20px auto;
 
-		&[data-highlighted] {
-			background-color: var(--a-2);
+		&[aria-selected="true"] {
+			background-color: var(--a-1);
 		}
 
-		&[data-selected] {
-			background-color: var(--a-1);
+		&[data-highlighted] {
+			background-color: var(--a-2);
 		}
 	}
 </style>

@@ -34,10 +34,10 @@
 			<input type="text" autocomplete="off" placeholder="Schema Name" bind:value={schema.name} />
 		</label>
 
-		<label>
+		<div class="label">
 			Icon:
 			<IconSelect bind:value={schema.icon} />
-		</label>
+		</div>
 
 		<div>
 			<!-- svelte-ignore a11y_label_has_associated_control -->
