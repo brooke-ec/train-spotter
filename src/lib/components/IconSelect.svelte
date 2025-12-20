@@ -47,7 +47,12 @@
 
 {#if isOpen}
 	<div {...combobox.content} class="drop" transition:fade={{ duration: 150 }}>
-		<VirtualList width="100%" height={combobox.availableHeight} itemCount={filtered.length} itemSize={25}>
+		<VirtualList
+			width="100%"
+			itemSize={25}
+			itemCount={filtered.length}
+			height={Math.min(combobox.availableHeight ?? 300, filtered.length * 25)}
+		>
 			{#snippet item({ index, style })}
 				{@const key = filtered[index]}
 				{@const label = toLabel(key)}
