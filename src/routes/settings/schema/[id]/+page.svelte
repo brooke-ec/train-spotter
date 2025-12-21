@@ -7,6 +7,7 @@
 
 	let { data } = $props();
 	let schema = $state(data.schema);
+	let id = $props.id();
 
 	async function save() {
 		await spinner(db.put(schema));
@@ -34,14 +35,13 @@
 			<input type="text" autocomplete="off" placeholder="Schema Name" bind:value={schema.name} />
 		</label>
 
-		<div class="label">
-			Icon:
-			<IconSelect bind:value={schema.icon} />
+		<div>
+			<label for="{id}-icon">Icon:</label>
+			<IconSelect id="{id}-icon" bind:value={schema.icon} />
 		</div>
 
 		<div>
-			<!-- svelte-ignore a11y_label_has_associated_control -->
-			<label>Custom Fields: </label>
+			<div class="label">Custom Fields:</div>
 			<FieldInput bind:schema />
 		</div>
 

@@ -4,7 +4,7 @@
 	import { fade } from "svelte/transition";
 	import Fa from "svelte-fa";
 
-	let { value = $bindable(), options }: { value?: string; options: string[] } = $props();
+	let { value = $bindable(), options, id }: { value?: string; options: string[]; id?: string } = $props();
 
 	const select = new Select<string>({
 		value: value,
@@ -12,7 +12,7 @@
 	});
 </script>
 
-<button {...select.trigger} class="button">
+<button {...select.trigger} class="button" {id}>
 	{select.value ?? "Select an option"}
 	<span class="chevron"><Fa icon={select.content["data-open"] ? faChevronUp : faChevronDown} /></span>
 </button>

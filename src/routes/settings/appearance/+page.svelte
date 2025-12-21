@@ -9,6 +9,8 @@
 	import { grouping } from "$lib/components/SightingList.svelte";
 	import { accent, resetAccent } from "$lib/theme";
 	import Fa from "svelte-fa";
+
+	let id = $props.id();
 </script>
 
 <div class="flexcol">
@@ -26,10 +28,10 @@
 			step={3}
 		/>
 	</label>
-	<div class="label">
-		Accent Colour
+	<div>
+		<label for="{id}-accent">Accent Colour</label>
 		<button onclick={resetAccent}><Fa icon={faArrowRotateRight} scale="0.85" /></button>
-		<Slider bind:value={$accent} max={360} />
+		<Slider id="{id}-accent" bind:value={$accent} max={360} />
 	</div>
 	<h3>List</h3>
 	<hr />

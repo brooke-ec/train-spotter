@@ -5,13 +5,15 @@
 	import Fa from "svelte-fa";
 
 	let {
-		icons = undefined,
+		id,
+		icons,
 		min = 0,
 		max = 100,
 		step = 1,
 		solid = false,
 		value = $bindable(0),
 	}: {
+		id?: string;
 		icons?: [IconDefinition, IconDefinition] | undefined;
 		min?: number;
 		max?: number;
@@ -47,7 +49,7 @@
 	{#if icons}
 		<Fa icon={icons[0]} />
 	{/if}
-	<span class="root" {...slider.root} bind:this={root}>
+	<span class="root" {...slider.root} bind:this={root} {id}>
 		<span class="track">
 			{#if !solid}
 				<span class="range"></span>

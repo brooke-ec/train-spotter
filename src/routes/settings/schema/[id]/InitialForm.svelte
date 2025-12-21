@@ -4,14 +4,15 @@
 	import Select from "$lib/components/Select.svelte";
 
 	let { field = $bindable() }: { field: SchemaDoc["fields"][number] } = $props();
+	let id = $props.id();
 </script>
 
 <div>
-	<div class="label">
+	<label for="{id}-type">
 		Initial Value
 		<hr />
-	</div>
-	<Select bind:value={field.initial.type} options={["none", "fixed", "derived"]} />
+	</label>
+	<Select id="{id}-type" bind:value={field.initial.type} options={["none", "fixed", "derived"]} />
 </div>
 
 {#if field.initial.type === "fixed"}

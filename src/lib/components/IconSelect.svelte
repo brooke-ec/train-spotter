@@ -6,7 +6,7 @@
 	import { fade } from "svelte/transition";
 	import Fa from "svelte-fa";
 
-	let { value = $bindable() }: { value: string } = $props();
+	let { value = $bindable(), id }: { value: string; id?: string } = $props();
 
 	const keys = Object.keys(icons);
 	const toLabel = (key: string) => titleCase(key.substring(2));
@@ -38,7 +38,7 @@
 </script>
 
 <div style="position: relative;">
-	<input type="text" {...combobox.input} class="input" placeholder={toLabel(value ?? "faCube")} />
+	<input type="text" {...combobox.input} class="input" placeholder={toLabel(value ?? "faCube")} {id} />
 	<div class="overlay">
 		<span class="icon"><Fa icon={icons[value ?? "faCube"]} /></span>
 		<span class="chevron"><Fa icon={isOpen ? faChevronUp : faChevronDown} /></span>
