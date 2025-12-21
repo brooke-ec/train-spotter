@@ -16,7 +16,6 @@
 
 	const combobox = new Combobox<string>({
 		value: () => value ?? "faCube",
-		// open: () => isOpen,
 		inputValue: () => (isOpen ? internalInputValue : toLabel(value ?? "faCube")),
 		onValueChange: (v) => {
 			value = v ?? value;

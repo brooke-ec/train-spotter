@@ -11,11 +11,9 @@
 	const LOAD_LIMIT = 25;
 
 	async function load({ detail: { complete, loaded } }: InfiniteEvent) {
-		console.log("Loading more schemas...");
-		await db.createIndex({ index: { fields: ["name", "type"] } });
+		await db.createIndex({ index: { fields: ["type"] } });
 		const result = await db.find({
-			selector: { $and: [{ type: { $eq: "schema" } }, { name: { $gt: null } }] },
-			sort: [{ name: "asc" }],
+			selector: { type: { $eq: "schema" } },
 			skip: schemas.length,
 			limit: LOAD_LIMIT,
 		});
@@ -34,7 +32,7 @@
 			db.put({
 				type: "schema",
 				icon: "faCube",
-				name: "new schema",
+				name: "New Schema",
 				fields: [],
 				_id: id,
 			}),
