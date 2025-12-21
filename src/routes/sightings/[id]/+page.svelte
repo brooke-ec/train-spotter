@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { SchemaFieldInitial, SchemaFieldType } from "$lib/pouchdb/types";
 	import type { SchemaDoc, SightingDoc } from "$lib/pouchdb/types";
-	import { spinner } from "../../Loading.svelte";
+	import { spinner } from "../../Spinner.svelte";
 	import { db, onChange } from "$lib/pouchdb";
 	import { goto } from "$app/navigation";
 	import { icons } from "$lib/util";

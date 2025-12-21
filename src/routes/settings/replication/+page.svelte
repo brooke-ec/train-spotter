@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { preventDefault } from 'svelte/legacy';
+	import { preventDefault } from "svelte/legacy";
 
 	import ReplicationStatus from "$lib/components/ReplicationStatus.svelte";
 	import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 	import { connect, credentials, disconnect as close, status } from "$lib/pouchdb";
-	import { spinner } from "../../Loading.svelte";
+	import { spinner } from "../../Spinner.svelte";
 	import Fa from "svelte-fa";
 
 	const { error } = status;

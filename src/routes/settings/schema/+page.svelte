@@ -2,7 +2,7 @@
 	import InfiniteLoading, { type InfiniteEvent } from "svelte-infinite-loading";
 	import LinkList from "$lib/components/LinkList.svelte";
 	import type { SchemaDoc } from "$lib/pouchdb/types";
-	import { spinner } from "../../Loading.svelte";
+	import { spinner } from "../../Spinner.svelte";
 	import { goto } from "$app/navigation";
 	import { icons } from "$lib/util";
 	import { db } from "$lib/pouchdb";

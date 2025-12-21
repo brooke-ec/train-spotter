@@ -7,7 +7,7 @@
 	import { createBrowserHistory, Action } from "history";
 	import { onNavigate } from "$app/navigation";
 	import { pwaInfo } from "virtual:pwa-info";
-	import Loading from "./Loading.svelte";
+	import Loading from "./Spinner.svelte";
 	import Backbar from "./Backbar.svelte";
 	import Navbar from "./Navbar.svelte";
 
