@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-	import { Combobox } from "melt/builders";
 	import VirtualList from "svelte-tiny-virtual-list";
 	import { icons, titleCase } from "$lib/util";
+	import { Combobox } from "melt/builders";
 	import { fade } from "svelte/transition";
 	import Fa from "svelte-fa";
 
