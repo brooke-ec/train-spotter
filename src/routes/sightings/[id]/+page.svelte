@@ -1,19 +1,18 @@
 <script lang="ts">
+	import type { SchemaFieldInitial, SchemaFieldType } from "$lib/pouchdb/types";
 	import type { SchemaDoc, SightingDoc } from "$lib/pouchdb/types";
 	import { spinner } from "../../Loading.svelte";
-	import type { SchemaDefaultValue, SchemaFieldType } from "$lib/types";
 	import { db, onChange } from "$lib/pouchdb";
 	import { goto } from "$app/navigation";
 	import { icons } from "$lib/util";
 	import { page } from "$app/state";
 	import Fa from "svelte-fa";
-	import { name } from "@melt-ui/svelte";
 
 	type Fields = {
 		[k: string]: {
 			value: string;
 			type: SchemaFieldType;
-			defaultValue: SchemaDefaultValue;
+			initial: SchemaFieldInitial;
 		};
 	};
 
@@ -29,7 +28,7 @@
 					[v.name]: {
 						value: "",
 						type: v.type,
-						defaultValue: v.defaultValue,
+						initial: v.initial,
 					},
 				};
 				return Object.assign(l, field);
@@ -42,13 +41,13 @@
 			newFields = Object.entries(sighting.fields).reduce<Fields>((l, [name, value]) => {
 				let type: SchemaFieldType = { type: "string" };
 				if (newFields[name] != null) type = newFields[name].type ?? type;
-				let defaultValue: SchemaDefaultValue = { type: "none" };
-				if (newFields[name] != null) defaultValue = newFields[name].defaultValue ?? defaultValue;
+				let initial: SchemaFieldInitial = { type: "none" };
+				if (newFields[name] != null) initial = newFields[name].initial ?? initial;
 				const field: Fields = {
 					[name]: {
 						value: value,
 						type: type,
-						defaultValue: defaultValue,
+						initial: initial,
 					},
 				};
 				return Object.assign(l, field);
@@ -164,7 +163,7 @@
 				<input
 					type="text"
 					autocomplete="off"
-					placeholder={value.defaultValue.type === "fixed" ? value.defaultValue.value : ""}
+					placeholder={value.initial.type === "fixed" ? value.initial.value : ""}
 					bind:value={value.value}
 				/>
 			</label>

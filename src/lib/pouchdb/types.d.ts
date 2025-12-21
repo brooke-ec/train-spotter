@@ -24,10 +24,10 @@ export type SchemaDoc = PouchDB.Core.ExistingDocument<{
 }>;
 
 export type SchemaFieldType =
-	| { name: "string" }
-	| { name: "number" }
-	| { name: "boolean" }
-	| { name: "select"; options: string[] };
+	| { type: "string" }
+	| { type: "number" }
+	| { type: "boolean" }
+	| { type: "select"; options: string[] };
 
 export type SchemaFieldInitial =
 	| { type: "derived"; url: string }

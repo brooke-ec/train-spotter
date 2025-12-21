@@ -10,10 +10,10 @@
 	<div class="label">
 		Type <hr />
 	</div>
-	<Select bind:value={type.name} options={["string", "number", "boolean", "select"]} />
+	<Select bind:value={type.type} options={["string", "number", "boolean", "select"]} />
 </div>
 
-{#if type.name === "select"}
+{#if type.type === "select"}
 	<label>
 		Options:
 		<ListInput bind:value={type.options} placeholder="Option Name" />

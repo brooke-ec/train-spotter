@@ -25,7 +25,7 @@
 		fields.push({
 			name,
 			id: name,
-			type: { name: "string" },
+			type: { type: "string" },
 			initial: { type: "none" },
 		});
 	}

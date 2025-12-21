@@ -6,12 +6,12 @@
 	let { field, value = $bindable() }: { field: SchemaFieldType; value: string } = $props();
 </script>
 
-{#if field.name == "string"}
+{#if field.type == "string"}
 	<input type="text" autocomplete="off" bind:value />
-{:else if field.name == "boolean"}
+{:else if field.type == "boolean"}
 	<StringSwitch bind:value />
-{:else if field.name == "number"}
+{:else if field.type == "number"}
 	<input type="text" pattern="[0-9]*" autocomplete="off" bind:value />
-{:else if field.name == "select"}
+{:else if field.type == "select"}
 	<Select bind:value options={field.options} />
 {/if}
