@@ -31,6 +31,7 @@
 	nav {
 		border-top: 1px solid var(--bg-4);
 		background-color: var(--bg-1);
+		view-transition-name: header;
 		align-items: end;
 		position: fixed;
 		display: flex;

@@ -1,17 +1,14 @@
 <script lang="ts">
 	import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-	import { slide } from "svelte/transition";
 	import { page } from "$app/state";
 	import Fa from "svelte-fa";
 
 	let height: number = $state(0);
-	let title: string = $derived(
-		page.data.path[page.data.path.length - 2]
-	);
+	let title: string = $derived(page.data.path[page.data.path.length - 2]);
 </script>
 
 <div style="height: {height}px;"></div>
-<div class="container" bind:clientHeight={height} transition:slide>
+<div class="container" bind:clientHeight={height}>
 	<div class="title" style="height: {height}px;">
 		<span>{title}</span>
 	</div>
@@ -23,6 +20,7 @@
 <style lang="scss">
 	.container {
 		border-bottom: 1px solid var(--bg-4);
+		view-transition-name: backbar;
 		background-color: var(--bg-1);
 		justify-content: center;
 		align-items: center;

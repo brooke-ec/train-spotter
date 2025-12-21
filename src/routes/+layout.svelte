@@ -1,21 +1,36 @@
 <script lang="ts">
 	import "greset";
-	import "$lib/global.scss";
+	import "./style.scss";
+	import "./transition.scss";
 	import "$lib/theme";
 
+	import { createBrowserHistory, Action } from "history";
+	import { onNavigate } from "$app/navigation";
 	import { pwaInfo } from "virtual:pwa-info";
-	import type { PageData } from "./$types";
-	import { fly } from "svelte/transition";
 	import Loading from "./Loading.svelte";
 	import Backbar from "./Backbar.svelte";
 	import Navbar from "./Navbar.svelte";
 
-	interface Props {
-		data: PageData;
-		children?: import("svelte").Snippet;
-	}
+	let { data, children } = $props();
 
-	let { data, children }: Props = $props();
+	let popping = false;
+	createBrowserHistory().listen(({ action }) => {
+		if (action == Action.Pop) popping = true;
+	});
+
+	onNavigate((navigation) => {
+		if (!document.startViewTransition || popping) {
+			popping = false;
+			return;
+		}
+
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
 </script>
 
 <Loading />
@@ -26,11 +41,9 @@
 	{/if}
 
 	<div style="overflow-x: hidden; flex-grow: 1">
-		{#key data.path}
-			<main in:fly={{ x: -200, duration: 200, delay: 200 }} out:fly={{ x: 200, duration: 200 }}>
-				{@render children?.()}
-			</main>
-		{/key}
+		<main>
+			{@render children?.()}
+		</main>
 	</div>
 
 	<Navbar />
