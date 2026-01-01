@@ -9,33 +9,44 @@
 	import { grouping } from "$lib/components/SightingList.svelte";
 	import { accent, resetAccent } from "$lib/theme";
 	import Fa from "svelte-fa";
+
+	let id = $props.id();
 </script>
 
 <div class="flexcol">
 	<h2>Appearance</h2>
 	<p class="secondary">Customise the appearance of the application.</p>
+	<hr />
 	<h3>App</h3>
-	<hr />
-	<!-- svelte-ignore a11y_label_has_associated_control -->
-	<label>
-		Navbar Padding
-		<Slider
-			bind:value={$padding}
-			icons={[faGripLinesVertical, faArrowsLeftRightToLine]}
-			props={{ max: 30, step: 3 }}
-		/>
-	</label>
-	<!-- svelte-ignore a11y_label_has_associated_control -->
-	<label>
-		Accent Colour
-		<button onclick={resetAccent}><Fa icon={faArrowRotateRight} scale="0.85" /></button>
-		<Slider bind:value={$accent} props={{ max: 360 }} />
-	</label>
+	<div class="container">
+		<label>
+			Navbar Padding
+			<Slider
+				bind:value={$padding}
+				icons={[faGripLinesVertical, faArrowsLeftRightToLine]}
+				max={30}
+				step={3}
+			/>
+		</label>
+		<div>
+			<label for="{id}-accent">Accent Colour</label>
+			<button onclick={resetAccent}><Fa icon={faArrowRotateRight} scale="0.85" /></button>
+			<Slider id="{id}-accent" bind:value={$accent} max={360} solid={true} />
+		</div>
+	</div>
 	<h3>List</h3>
-	<hr />
-	<!-- svelte-ignore a11y_label_has_associated_control -->
-	<label>
-		Grouping Period: <span class="secondary">{$grouping ? $grouping + " mins" : "no grouping"}</span>
-		<Slider bind:value={$grouping} props={{ max: 60, step: 5 }} />
-	</label>
+	<div class="container">
+		<label>
+			Grouping Period: <span class="secondary">{$grouping ? $grouping + " mins" : "no grouping"}</span>
+			<Slider bind:value={$grouping} max={60} step={5} />
+		</label>
+	</div>
 </div>
+
+<style lang="scss">
+	.container {
+		background-color: var(--bg-2);
+		border-radius: 10px;
+		padding: 10px;
+	}
+</style>

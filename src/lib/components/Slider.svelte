@@ -1,54 +1,66 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
-	import { createSlider, melt, createSync, type CreateSliderProps } from "@melt-ui/svelte";
 	import { type IconDefinition } from "@fortawesome/free-solid-svg-icons";
-	import { propertyStore } from "svelte-writable-derived";
+	import { Slider } from "melt/builders";
+	import { ElementSize } from "runed";
 	import Fa from "svelte-fa";
 
-	interface Props {
+	let {
+		icons,
+		min = 0,
+		max = 100,
+		step = 1,
+		solid = false,
+		value = $bindable(0),
+	}: {
+		id?: string;
 		icons?: [IconDefinition, IconDefinition] | undefined;
-		props: CreateSliderProps;
+		min?: number;
+		max?: number;
+		step?: number;
 		solid?: boolean;
 		value?: number;
-	}
+	} = $props();
 
-	let {
-		icons = undefined,
-		props,
-		solid = false,
-		value = $bindable(0)
-	}: Props = $props();
-
-	const {
-		states,
-		elements: { root, range, thumbs, ticks },
-	} = createSlider(props);
-
-	const sync = createSync({ value: propertyStore(states.value, 0) });
-	run(() => {
-		sync.value(value, (v) => (value = v));
+	const slider = new Slider({
+		min: () => min,
+		max: () => max,
+		step: () => step,
+		value: () => value,
+		onValueChange: (v) => (value = v),
 	});
+
+	let root = $state() as HTMLElement;
+	const size = new ElementSize(() => root);
+
+	// Calculate tick positions manually since melt-next doesn't have built-in ticks
+	const tickCount = $derived(Math.floor((max - min) / step) + 1);
+	const ticks = $derived(
+		tickCount <= size.width / 20
+			? Array.from({ length: tickCount }, (_, i) => ({
+					position: ((i * step) / (max - min)) * 100,
+					isBounded: min + i * step <= value,
+				}))
+			: [],
+	);
 </script>
 
 <div class="container">
 	{#if icons}
 		<Fa icon={icons[0]} />
 	{/if}
-	<span use:melt={$root} class="root">
+	<span class="root" {...slider.root} bind:this={root}>
 		<span class="track">
 			{#if !solid}
-				<span use:melt={$range}></span>
+				<span class="range"></span>
 			{/if}
 		</span>
 
-		{#if $ticks.length - 1 <= 10}
-			{#each $ticks as tick}
-				<span use:melt={tick} class="tick"></span>
-			{/each}
-		{/if}
+		{#each ticks as tick, i (i)}
+			<span class="tick" style:left="{tick.position}%" data-bounded={tick.isBounded ? "" : undefined}
+			></span>
+		{/each}
 
-		<span use:melt={$thumbs[0]} class="thumb"></span>
+		<span class="thumb" {...slider.thumb}></span>
 	</span>
 	{#if icons}
 		<Fa icon={icons[1]} />
@@ -83,18 +95,23 @@
 			background-color: var(--a-1);
 		}
 
-		span {
+		.range {
+			position: absolute;
 			background-color: var(--a-1);
 			border-radius: inherit;
-			height: inherit;
+			height: 5px;
+			left: 0;
+			right: var(--percentage-inv);
 		}
 	}
 
 	.tick {
+		position: absolute;
 		background-color: #535353;
 		border-radius: 100%;
 		height: 3px;
 		width: 3px;
+		transform: translateX(-50%);
 
 		&[data-bounded] {
 			background-color: white;
@@ -102,6 +119,10 @@
 	}
 
 	.thumb {
+		position: absolute;
+		left: var(--percentage);
+		top: 50%;
+		transform: translate(-50%, -50%);
 		box-shadow: 0 0 3px 1px black;
 		background-color: white;
 		border: solid 2px white;
