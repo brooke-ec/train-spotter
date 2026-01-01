@@ -4,7 +4,7 @@
 	let { elements }: { elements: DashboardElement[] } = $props();
 </script>
 
-{#each elements as { type }}
+{#each elements as { type, props }}
 	{@const Component = get(type)}
-	<Component />
+	<Component {...props} />
 {/each}

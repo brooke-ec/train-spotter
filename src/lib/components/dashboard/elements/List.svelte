@@ -1,15 +1,13 @@
 <script lang="ts" module>
-	import * as z from "zod";
-
-	export const schema = z.object({
-		limit: z.number().min(1).default(25),
-	});
+	export interface ListProps {
+		limit: number;
+	}
 </script>
 
 <script lang="ts">
 	import SightingList from "$lib/components/SightingList.svelte";
 
-	let p: z.output<typeof schema> = $props();
+	let p: ListProps = $props();
 </script>
 
 <SightingList {...p} />

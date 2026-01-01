@@ -1,13 +1,20 @@
-<script lang="ts" module>
-	import * as z from "zod";
-
-	export const schema = z.object();
-</script>
-
 <script lang="ts">
 	import Dashboard from "$lib/components/dashboard/Dashboard.svelte";
 
-	const elements = [{ type: "input" }, { type: "list" }];
+	const elements = [
+		{ type: "input", props: {} },
+		{ type: "list", props: { limit: 10 } },
+	];
 </script>
 
-<Dashboard {elements} />
+<div class="dashboard">
+	<Dashboard {elements} />
+</div>
+
+<style lang="scss">
+	.dashboard {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+	}
+</style>
