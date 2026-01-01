@@ -13,4 +13,7 @@ export default defineConfig({
 			registerType: "prompt",
 		}),
 	],
+	server: {
+		allowedHosts: ["doc.nimahost.net"],
+	},
 });

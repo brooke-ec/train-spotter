@@ -31,7 +31,7 @@
 		<div>
 			<label for="{id}-accent">Accent Colour</label>
 			<button onclick={resetAccent}><Fa icon={faArrowRotateRight} scale="0.85" /></button>
-			<Slider id="{id}-accent" bind:value={$accent} max={360} />
+			<Slider id="{id}-accent" bind:value={$accent} max={360} solid={true} />
 		</div>
 	</div>
 	<h3>List</h3>

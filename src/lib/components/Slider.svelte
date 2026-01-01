@@ -5,7 +5,6 @@
 	import Fa from "svelte-fa";
 
 	let {
-		id,
 		icons,
 		min = 0,
 		max = 100,
@@ -23,9 +22,9 @@
 	} = $props();
 
 	const slider = new Slider({
-		min,
-		max,
-		step,
+		min: () => min,
+		max: () => max,
+		step: () => step,
 		value: () => value,
 		onValueChange: (v) => (value = v),
 	});
@@ -49,7 +48,7 @@
 	{#if icons}
 		<Fa icon={icons[0]} />
 	{/if}
-	<span class="root" {...slider.root} bind:this={root} {id}>
+	<span class="root" {...slider.root} bind:this={root}>
 		<span class="track">
 			{#if !solid}
 				<span class="range"></span>
