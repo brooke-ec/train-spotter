@@ -1,5 +1,7 @@
 /// <reference types="pouchdb-core" />
 
+import type { DashboardElement } from "$lib/components/dashboard";
+
 export type SightingDoc = PouchDB.Core.ExistingDocument<{
 	identification: string;
 	type: "sighting";
@@ -16,12 +18,20 @@ export type SchemaDoc = PouchDB.Core.ExistingDocument<{
 	type: "schema";
 	icon: string;
 	name: string;
-	fields: {
-		name: string;
-		type: SchemaFieldType;
-		initial: SchemaFieldInitial;
-	}[];
+	fields: SchemaField[];
 }>;
+
+export type DashboardDoc = PouchDB.Core.ExistingDocument<{
+	type: "dashboard";
+	name: string;
+	elements: DashboardElement[];
+}>;
+
+export type SchemaField = {
+	name: string;
+	type: SchemaFieldType;
+	initial: SchemaFieldInitial;
+};
 
 export type SchemaFieldType =
 	| { type: "string" }

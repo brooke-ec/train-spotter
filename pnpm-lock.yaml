@@ -37,8 +37,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       melt:
-        specifier: ^0.42.0
-        version: 0.42.0(@floating-ui/dom@1.7.4)(svelte@5.46.1)
+        specifier: ^0.44.0
+        version: 0.44.0(@floating-ui/dom@1.7.4)(svelte@5.46.1)
       pretty-bytes:
         specifier: ^6.1.1
         version: 6.1.1
@@ -1746,8 +1746,8 @@ packages:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
 
-  melt@0.42.0:
-    resolution: {integrity: sha512-ye5bE6J0bcNsWRCrSwp4pI9V2M5SB908g6VwqD2zAuTOiIXDNAMZ2S7OLmSKuecJ6sY1bFgQUhji8W4Y9u6GXA==}
+  melt@0.44.0:
+    resolution: {integrity: sha512-N2/d5zY7XNr9R8ZB/dLVmZtRKaQgq2Pb1Y8Wrpfw/zeUG0TT1pTaQFL5wLDRS84NymOrkNH9NmufYI54UGzjCQ==}
     peerDependencies:
       '@floating-ui/dom': ^1.6.0
       svelte: ^5.30.1
@@ -4101,7 +4101,7 @@ snapshots:
 
   math-intrinsics@1.1.0: {}
 
-  melt@0.42.0(@floating-ui/dom@1.7.4)(svelte@5.46.1):
+  melt@0.44.0(@floating-ui/dom@1.7.4)(svelte@5.46.1):
     dependencies:
       '@floating-ui/dom': 1.7.4
       dequal: 2.0.3

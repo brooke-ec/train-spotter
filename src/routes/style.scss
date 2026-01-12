@@ -94,6 +94,13 @@ a[href] {
 		@extend %button;
 	}
 
+	&.danger {
+		--button-idle: var(--r-1);
+		--button-active: var(--r-2);
+		--button-disabled: var(--bg-2);
+		@extend %button;
+	}
+
 	&.link {
 		text-decoration: underline;
 		transition: color 250ms;
@@ -149,11 +156,31 @@ span.alert {
 .flex {
 	display: flex;
 	gap: 10px;
+
+	.left {
+		justify-content: flex-start;
+	}
+
+	.center {
+		justify-content: center;
+	}
+
+	.right {
+		justify-content: flex-end;
+	}
+
+	> .end {
+		margin-left: auto;
+	}
 }
 
 .flexcol {
 	@extend .flex;
 	flex-direction: column;
+
+	> .end {
+		margin-top: auto;
+	}
 }
 
 .flexrow {
@@ -182,4 +209,10 @@ span.alert {
 	font-variant: normal;
 	color: white;
 	border: none;
+}
+
+.box {
+	background-color: var(--bg-2);
+	border-radius: 10px;
+	padding: 10px;
 }

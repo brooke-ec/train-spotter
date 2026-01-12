@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { Toggle } from "melt/builders";
 
-	let { value = $bindable(false) }: { value?: boolean } = $props();
+	let { value = $bindable(false), id }: { value?: boolean; id?: string } = $props();
 
 	const toggle = new Toggle({ value: () => value, onValueChange: (v) => (value = v) });
 </script>
 
 <div>
-	<button {...toggle.trigger} aria-label="toggle">
+	<button {id} {...toggle.trigger} aria-label="toggle">
 		<span class="thumb"></span>
 	</button>
 	<input {...toggle.hiddenInput} />

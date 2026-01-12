@@ -1,15 +1,14 @@
 <script lang="ts">
 	import LinkList from "$lib/components/LinkList.svelte";
-	import ReplicationStatus, { connection } from "$lib/components/ReplicationStatus.svelte";
+	import { connection } from "$lib/components/ReplicationStatus.svelte";
 	import {
 		faBoxArchive,
-		faChevronRight,
 		faCube,
 		faPalette,
 		faPlug,
+		faTableColumns,
 	} from "@fortawesome/free-solid-svg-icons";
 	import { onMount } from "svelte";
-	import Fa from "svelte-fa";
 
 	let storageUsage: number = $state(100);
 	onMount(async () => {
@@ -51,34 +50,11 @@
 				icon: faPalette,
 				title: "Appearance",
 			},
+			{
+				url: "/settings/dashboard",
+				icon: faTableColumns,
+				title: "Dashboards",
+			},
 		]}
 	/>
-
-	<!-- <div class="group">
-		<a href="/settings/replication">
-			<Fa icon={faPlug} />
-			<span class="title">Replication</span>
-			<span class="info"><ReplicationStatus mode="connection" icon={false} /></span>
-			<span class="chevron"><Fa icon={faChevronRight} /></span>
-		</a>
-		<a href="/settings/storage">
-			<Fa icon={faBoxArchive} />
-			<span class="title">Storage</span>
-			{#if storageUsage !== undefined}<span class="info">{storageUsage}% Used</span>{/if}
-			<span class="chevron"><Fa icon={faChevronRight} /></span>
-		</a>
-		<a href="/settings/schema">
-			<Fa icon={faCube} />
-			<span class="title">Schema</span>
-			<span class="chevron"><Fa icon={faChevronRight} /></span>
-		</a>
-	</div>
-
-	<div class="group">
-		<a href="/settings/appearance">
-			<Fa icon={faPalette} />
-			<span class="title">Appearance</span>
-			<span class="chevron"><Fa icon={faChevronRight} /></span>
-		</a>
-	</div> -->
 </div>

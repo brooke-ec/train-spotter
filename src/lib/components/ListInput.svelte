@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { slide } from "svelte/transition";
 
-	let { value = $bindable([]), placeholder = "value" }: { value: string[]; placeholder?: string } =
-		$props();
+	let { value = $bindable(), placeholder = "value" }: { value: string[]; placeholder?: string } = $props();
 	let inputs: HTMLInputElement[] = $state([]);
-	let raw: string[] = $state(value); // todo: not two way reactive :(
+	let raw: string[] = $state(value ?? []); // todo: not two way reactive :(
 
 	$effect(() => {
 		if (!raw.some((i) => i == "")) raw.push("");

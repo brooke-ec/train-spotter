@@ -18,7 +18,7 @@
 	<p class="secondary">Customise the appearance of the application.</p>
 	<hr />
 	<h3>App</h3>
-	<div class="container">
+	<div class="box">
 		<label>
 			Navbar Padding
 			<Slider
@@ -35,18 +35,10 @@
 		</div>
 	</div>
 	<h3>List</h3>
-	<div class="container">
+	<div class="box">
 		<label>
 			Grouping Period: <span class="secondary">{$grouping ? $grouping + " mins" : "no grouping"}</span>
 			<Slider bind:value={$grouping} max={60} step={5} />
 		</label>
 	</div>
 </div>
-
-<style lang="scss">
-	.container {
-		background-color: var(--bg-2);
-		border-radius: 10px;
-		padding: 10px;
-	}
-</style>

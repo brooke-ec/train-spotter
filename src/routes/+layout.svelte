@@ -10,6 +10,7 @@
 	import Loading from "./Spinner.svelte";
 	import Backbar from "./Backbar.svelte";
 	import Navbar from "./Navbar.svelte";
+	import Dialog from "./Dialog.svelte";
 
 	let { data, children } = $props();
 
@@ -34,6 +35,7 @@
 </script>
 
 <Loading />
+<Dialog />
 
 <div style="flex-direction: column; display: flex; height: 100vh;">
 	{#if data.path.length > 1}

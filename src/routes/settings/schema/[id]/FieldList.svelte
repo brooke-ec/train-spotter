@@ -1,23 +1,20 @@
 <script lang="ts">
-	import { faBars, faChevronRight, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+	import { faBars, faChevronRight, faPlus } from "@fortawesome/free-solid-svg-icons";
 	import { dragHandleZone, dragHandle, type DndEvent } from "svelte-dnd-action";
-	import { Accordion } from "melt/builders";
-	import type { SchemaDoc } from "$lib/pouchdb/types";
+	import type { SchemaDoc, SchemaField } from "$lib/pouchdb/types";
+	import { closeDialog, openDialog } from "$lib/util";
 	import FieldForm from "./FieldForm.svelte";
-	import { slide } from "svelte/transition";
 	import { flip } from "svelte/animate";
 	import Fa from "svelte-fa";
 
 	const flipDurationMs = 250;
-	type IdField = SchemaDoc["fields"][number] & { id: string };
+	type IdField = SchemaField & { id: string };
 
 	let { schema = $bindable() }: { schema: SchemaDoc } = $props();
 	let fields: IdField[] = $state(schema.fields.map((f) => ({ ...f, id: f.name })));
 	$effect(() => {
 		schema.fields = fields.map((f) => (({ id, ...r }) => r)(f));
 	});
-
-	const accordion = new Accordion();
 
 	function add() {
 		const count = fields.filter((f) => f.id.match(/^New Field( \d+)?$/)).length;
@@ -32,8 +29,10 @@
 
 	function remove(id: string) {
 		const name = fields.find((f) => f.id === id)?.name || id;
-		if (confirm(`Are you sure you want to delete the field "${name}"? This action cannot be undone.`))
+		if (confirm(`Are you sure you want to delete the field "${name}"? This action cannot be undone.`)) {
 			fields = fields.filter((f) => f.id !== id);
+			closeDialog();
+		}
 	}
 
 	function handleDndConsider(e: CustomEvent<DndEvent<IdField>>) {
@@ -47,34 +46,24 @@
 
 <div class="container">
 	<div
-		{...accordion.root}
 		use:dragHandleZone={{ items: fields, flipDurationMs, dropTargetStyle: {} }}
 		onconsider={handleDndConsider}
 		onfinalize={handleDndFinalize}
 	>
 		{#each fields as field, i (field.id)}
-			{@const item = accordion.getItem({ id: field.id })}
 			<div class="field" animate:flip={{ duration: flipDurationMs }}>
-				<div {...item.heading} style="display: flex; align-items: center">
-					<button class="row" {...item.trigger}>
-						<span class="chevron" class:rotated={accordion.isExpanded(field.id)}>
+				<div style="display: flex; align-items: center">
+					{#snippet content()}
+						<FieldForm bind:field={fields[i]} remove={() => remove(field.id)} />
+					{/snippet}
+					<span class="handle" use:dragHandle><Fa icon={faBars} /></span>
+					<button class="row" onclick={() => openDialog({ title: "Edit Field", content })}>
+						{field.name.length > 0 ? field.name : "Unnamed Field"}
+						<span class="chevron">
 							<Fa icon={faChevronRight} />
 						</span>
-						{field.name.length > 0 ? field.name : "Unnamed Field"}
 					</button>
-					{#if accordion.isExpanded(field.id)}
-						<button class="handle" onclick={() => remove(field.id)}>
-							<Fa icon={faTrash} />
-						</button>
-					{:else}
-						<span class="handle" use:dragHandle><Fa icon={faBars} /></span>
-					{/if}
 				</div>
-				{#if accordion.isExpanded(field.id)}
-					<div {...item.content} transition:slide class="content">
-						<FieldForm bind:field={fields[i]} />
-					</div>
-				{/if}
 			</div>
 		{/each}
 	</div>
@@ -110,20 +99,6 @@
 	.chevron {
 		transition: transform 250ms ease-in-out;
 		transform: rotate(0deg);
-
-		&.rotated {
-			transform: rotate(90deg);
-		}
-	}
-
-	.content {
-		background-color: var(--bg-2);
-		overflow: hidden;
-		padding: 0 10px 10px 10px;
-	}
-
-	#dnd-action-dragged-el {
-		background-color: var(--bg-4) !important;
-		border-radius: 5px !important;
+		margin-left: auto;
 	}
 </style>

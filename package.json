@@ -17,7 +17,7 @@
 		"@types/pouchdb-browser": "^6.1.5",
 		"@vite-pwa/sveltekit": "^1.1.0",
 		"greset": "^2.0.0",
-		"melt": "^0.42.0",
+		"melt": "^0.44.0",
 		"pretty-bytes": "^6.1.1",
 		"runed": "^0.37.1",
 		"sass": "^1.97.1",

@@ -7,16 +7,17 @@
 	let id = $props.id();
 </script>
 
-<div>
-	<label for="{id}-type">
-		Type <hr />
-	</label>
-	<Select id="{id}-type" bind:value={type.type} options={["string", "number", "boolean", "select"]} />
-</div>
+<h3>Field Type</h3>
+<div class="box flexcol">
+	<div>
+		<label for="type-{id}">Type:</label>
+		<Select id="type-{id}" bind:value={type.type} options={["string", "number", "boolean", "select"]} />
+	</div>
 
-{#if type.type === "select"}
-	<label>
-		Options:
-		<ListInput bind:value={type.options} placeholder="Option Name" />
-	</label>
-{/if}
+	{#if type.type === "select"}
+		<label>
+			Options:
+			<ListInput bind:value={type.options} placeholder="Option Name" />
+		</label>
+	{/if}
+</div>
