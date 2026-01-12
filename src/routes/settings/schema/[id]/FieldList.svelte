@@ -74,13 +74,14 @@
 
 <style lang="scss">
 	.container {
-		background-color: var(--bg-3);
+		background-color: var(--bg-2);
 		border-radius: 5px;
 		overflow: hidden;
 	}
 
 	.field {
-		background-color: var(--bg-3);
+		background-color: var(--bg-2);
+		border-radius: 5px;
 	}
 
 	.row {

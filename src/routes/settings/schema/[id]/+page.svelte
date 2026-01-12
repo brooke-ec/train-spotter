@@ -6,6 +6,7 @@
 	import { db } from "$lib/pouchdb";
 
 	let { data } = $props();
+	// svelte-ignore state_referenced_locally
 	let schema = $state(data.schema);
 	let id = $props.id();
 
