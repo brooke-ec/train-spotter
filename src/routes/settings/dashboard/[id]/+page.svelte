@@ -4,6 +4,7 @@
 	import ElementSelector from "./ElementSelector.svelte";
 	import { goto, invalidateAll } from "$app/navigation";
 	import { openDialog, spinner } from "$lib/util";
+	import ElementForm from "./ElementForm.svelte";
 	import { capitalCase } from "change-case";
 	import { db } from "$lib/pouchdb";
 
@@ -55,7 +56,7 @@
 </script>
 
 {#snippet element(index: number)}
-	{JSON.stringify(dashboard.elements[index], null, 2)}
+	<ElementForm bind:element={dashboard.elements[index]} />
 {/snippet}
 
 {#snippet selector()}

@@ -1,13 +1,14 @@
 <script lang="ts">
-	import { faList, faTableList } from "@fortawesome/free-solid-svg-icons";
+	import { faKeyboard, faList } from "@fortawesome/free-solid-svg-icons";
+	import type { ELEMENTS } from "$lib/components/dashboard/elements";
 	import Fa from "svelte-fa";
 
-	let { onselect }: { onselect: (type: string) => void } = $props();
+	let { onselect }: { onselect: (type: keyof typeof ELEMENTS) => void } = $props();
 </script>
 
 <div class="grid">
 	<button onclick={() => onselect("input")} class="box flexcol center">
-		<Fa icon={faTableList} />
+		<Fa icon={faKeyboard} />
 		<h3>Sighting Input</h3>
 	</button>
 	<button onclick={() => onselect("list")} class="box flexcol center">
