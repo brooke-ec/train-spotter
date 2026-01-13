@@ -6,5 +6,6 @@
 
 {#each elements as { type, props }}
 	{@const Component = get(type)}
-	<Component {...props} />
+	<!-- I solemnly swear I am up to no good. -->
+	<Component {...props as any} />
 {/each}

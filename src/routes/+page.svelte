@@ -1,9 +1,10 @@
 <script lang="ts">
 	import Dashboard from "$lib/components/dashboard/Dashboard.svelte";
+	import type { DashboardElement } from "$lib/components/dashboard";
 
-	const elements = [
-		{ type: "input", props: {} },
-		{ type: "list", props: { limit: 10 } },
+	const elements: DashboardElement[] = [
+		{ id: "foo", type: "input", props: {} },
+		{ id: "bar", type: "list", props: { limit: 10 } },
 	];
 </script>
 
