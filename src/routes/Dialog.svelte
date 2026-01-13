@@ -3,7 +3,7 @@
 
 	interface DialogOptions<T> {
 		content: Snippet<[T]>;
-		parameters: T;
+		parameters?: T;
 		title: string;
 	}
 
@@ -20,6 +20,7 @@
 
 <script lang="ts">
 	import { faXmark } from "@fortawesome/free-solid-svg-icons";
+	import { fade } from "svelte/transition";
 	import { Dialog } from "melt/builders";
 	import Fa from "svelte-fa";
 
@@ -38,14 +39,18 @@
 
 <dialog {...dialog.content}>
 	{#if current}
-		<div class="titlebar">
-			<h1>{current.title}</h1>
-			<button onclick={() => (dialog.open = false)}><Fa icon={faXmark} scale={1.5} /></button>
-		</div>
-		<hr />
-		<div class="content">
-			{@render current.content(current.parameters)}
-		</div>
+		{#key current}
+			<div in:fade={{ duration: 300 }}>
+				<div class="titlebar">
+					<h1>{current.title}</h1>
+					<button onclick={() => (dialog.open = false)}><Fa icon={faXmark} scale={1.5} /></button>
+				</div>
+				<hr />
+				<div class="content">
+					{@render current.content(current.parameters)}
+				</div>
+			</div>
+		{/key}
 	{/if}
 </dialog>
 

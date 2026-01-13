@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ReorderableList from "$lib/components/ReorderableList.svelte";
 	import type { DashboardElement } from "$lib/pouchdb/types.js";
+	import ElementSelector from "./ElementSelector.svelte";
 	import { goto, invalidateAll } from "$app/navigation";
 	import { openDialog, spinner } from "$lib/util";
 	import { capitalCase } from "change-case";
@@ -27,25 +28,38 @@
 		goto("/settings/dashboard");
 	}
 
-	function addField() {
+	function addElement(type: string) {
 		dashboard.elements.push({
 			id: crypto.randomUUID(),
-			type: "input",
 			props: {},
+			type,
 		} as DashboardElement);
+
+		clickElement(dashboard.elements.length - 1);
 	}
 
-	function clickField(index: number) {
+	function clickElement(index: number) {
 		openDialog({
-			content,
+			content: element,
 			parameters: index,
 			title: "Edit Field",
 		});
 	}
+
+	function selectElement() {
+		openDialog({
+			content: selector,
+			title: "Select an Element",
+		});
+	}
 </script>
 
-{#snippet content(index: number)}
+{#snippet element(index: number)}
 	{JSON.stringify(dashboard.elements[index], null, 2)}
+{/snippet}
+
+{#snippet selector()}
+	<ElementSelector onselect={addElement} />
 {/snippet}
 
 <div style="height: 100%; display: flex; flex-direction: column;">
@@ -62,8 +76,8 @@
 		<div>
 			<div class="label">Custom Fields:</div>
 			<ReorderableList
-				onadd={addField}
-				onclick={clickField}
+				onadd={selectElement}
+				onclick={clickElement}
 				bind:items={dashboard.elements}
 				label={(i) => capitalCase(i.type)}
 			/>
