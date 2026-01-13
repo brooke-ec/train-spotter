@@ -1,15 +1,16 @@
 <script lang="ts">
 	import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 	import VirtualList from "svelte-tiny-virtual-list";
-	import { icons, titleCase } from "$lib/util";
+	import { capitalCase } from "change-case";
 	import { Combobox } from "melt/builders";
 	import { fade } from "svelte/transition";
+	import { icons } from "$lib/util";
 	import Fa from "svelte-fa";
 
 	let { value = $bindable(), id }: { value: string; id?: string } = $props();
 
 	const keys = Object.keys(icons);
-	const toLabel = (key: string) => titleCase(key.substring(2));
+	const toLabel = (key: string) => capitalCase(key.substring(2));
 
 	let internalInputValue = $state("");
 	let isOpen = $state(false);

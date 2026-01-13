@@ -3,6 +3,7 @@
 	import type { DashboardElement } from "$lib/pouchdb/types.js";
 	import { goto, invalidateAll } from "$app/navigation";
 	import { openDialog, spinner } from "$lib/util";
+	import { capitalCase } from "change-case";
 	import { db } from "$lib/pouchdb";
 
 	let { data } = $props();
@@ -64,7 +65,7 @@
 				onadd={addField}
 				onclick={clickField}
 				bind:items={dashboard.elements}
-				label={(i) => i.type}
+				label={(i) => capitalCase(i.type)}
 			/>
 		</div>
 
