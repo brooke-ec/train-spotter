@@ -16,7 +16,7 @@
 	<InitialForm bind:field />
 
 	<div class="controls flexrow right">
-		<button class="danger" onclick={remove}>Delete</button>
+		<button class="secondary" onclick={remove}>Delete</button>
 		<button class="primary" onclick={closeDialog}>Save</button>
 	</div>
 </div>

@@ -1,7 +1,7 @@
-import { db } from "$lib/pouchdb";
 import type { SchemaDoc } from "$lib/pouchdb/types";
-import { error } from "@sveltejs/kit";
 import type { LayoutLoad } from "./$types";
+import { error } from "@sveltejs/kit";
+import { db } from "$lib/pouchdb";
 
 export const prerender = false;
 

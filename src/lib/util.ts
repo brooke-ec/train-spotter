@@ -1,7 +1,8 @@
 import { type IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { writable, type Readable, type Writable } from "svelte/store";
-import * as fortawesome from "@fortawesome/free-solid-svg-icons";
 export { openDialog, closeDialog } from "../routes/Dialog.svelte";
+import * as fortawesome from "@fortawesome/free-solid-svg-icons";
+export { spinner } from "../routes/Spinner.svelte";
 
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 

@@ -1,6 +1,7 @@
 /// <reference types="pouchdb-core" />
 
 import type { DashboardElement } from "$lib/components/dashboard";
+export type { DashboardElement };
 
 export type SightingDoc = PouchDB.Core.ExistingDocument<{
 	identification: string;
@@ -28,6 +29,7 @@ export type DashboardDoc = PouchDB.Core.ExistingDocument<{
 }>;
 
 export type SchemaField = {
+	id: string;
 	name: string;
 	type: SchemaFieldType;
 	initial: SchemaFieldInitial;

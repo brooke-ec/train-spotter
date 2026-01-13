@@ -1,15 +1,16 @@
 <script lang="ts" module>
-	import type { Snippet } from "svelte";
+	import type { Component, Snippet } from "svelte";
 
-	interface DialogOptions {
-		content: Snippet;
+	interface DialogOptions<T> {
+		content: Snippet<[T]>;
+		parameters: T;
 		title: string;
 	}
 
-	let current: DialogOptions | null = $state(null);
+	let current: DialogOptions<any> | null = $state(null);
 
-	export function openDialog(props: DialogOptions) {
-		current = props;
+	export function openDialog<T>(options: DialogOptions<T>) {
+		current = options;
 	}
 
 	export function closeDialog() {
@@ -42,7 +43,9 @@
 			<button onclick={() => (dialog.open = false)}><Fa icon={faXmark} scale={1.5} /></button>
 		</div>
 		<hr />
-		<div class="content">{@render current.content()}</div>
+		<div class="content">
+			{@render current.content(current.parameters)}
+		</div>
 	{/if}
 </dialog>
 

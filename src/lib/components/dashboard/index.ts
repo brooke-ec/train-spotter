@@ -2,6 +2,7 @@ import type { Component } from "svelte";
 import { ELEMENTS } from "./elements";
 
 export interface DashboardElement {
+	id: string;
 	type: string;
 	props: Record<string, any>;
 }
