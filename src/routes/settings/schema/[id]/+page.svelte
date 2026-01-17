@@ -3,7 +3,7 @@
 	import IconSelect from "$lib/components/IconSelect.svelte";
 	import { goto, invalidateAll } from "$app/navigation";
 	import type { SchemaField } from "$lib/pouchdb/types";
-	import { openDialog, spinner } from "$lib/util";
+	import { closeDialog, openDialog, spinner } from "$lib/util";
 	import FieldForm from "./FieldForm.svelte";
 	import { db } from "$lib/pouchdb";
 
@@ -46,10 +46,17 @@
 			title: "Edit Field",
 		});
 	}
+
+	function removeField(index: number) {
+		if (!confirm("Are you sure you want to delete this field?")) return;
+
+		schema.fields.splice(index, 1);
+		closeDialog();
+	}
 </script>
 
 {#snippet content(index: number)}
-	<FieldForm bind:field={schema.fields[index]} remove={() => {}} />
+	<FieldForm bind:field={schema.fields[index]} remove={() => removeField(index)} />
 {/snippet}
 
 <div style="height: 100%; display: flex; flex-direction: column;">
