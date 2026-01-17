@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	import type { Component, Snippet } from "svelte";
+	import type { Snippet } from "svelte";
 
 	interface DialogOptions<T> {
 		content: Snippet<[T]>;
@@ -65,8 +65,8 @@
 		display: flex;
 		flex-direction: column;
 
-		min-height: 100vh;
-		min-width: 100vw;
+		min-height: 100%;
+		min-width: 100%;
 
 		transition: ease 300ms;
 		scale: 0.95;
