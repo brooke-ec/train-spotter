@@ -1,4 +1,4 @@
-import type { ComponentProps, Component } from "svelte";
+import type { ComponentProps } from "svelte";
 import { ELEMENTS } from "./elements";
 
 export type DashboardElement = {
